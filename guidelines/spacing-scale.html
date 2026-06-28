@@ -1,0 +1,29 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="Spacing scale" subtitle="4px base unit — the rhythm behind every gap and pad" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-page); font-family: var(--font-body); }
+  .row { display: flex; align-items: flex-end; gap: 14px; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .bar { background: var(--color-salem); border-radius: 4px; width: 22px; }
+  .lbl { font-size: 11px; color: var(--text-muted); }
+  .px { font-size: 11px; font-weight: 600; color: var(--text-body); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="bar" style="height:8px"></div><div class="px">8</div><div class="lbl">2</div></div>
+    <div class="item"><div class="bar" style="height:12px"></div><div class="px">12</div><div class="lbl">3</div></div>
+    <div class="item"><div class="bar" style="height:16px"></div><div class="px">16</div><div class="lbl">4</div></div>
+    <div class="item"><div class="bar" style="height:24px"></div><div class="px">24</div><div class="lbl">6</div></div>
+    <div class="item"><div class="bar" style="height:32px"></div><div class="px">32</div><div class="lbl">8</div></div>
+    <div class="item"><div class="bar" style="height:48px"></div><div class="px">48</div><div class="lbl">12</div></div>
+    <div class="item"><div class="bar" style="height:64px"></div><div class="px">64</div><div class="lbl">16</div></div>
+    <div class="item"><div class="bar" style="height:80px"></div><div class="px">80</div><div class="lbl">20</div></div>
+    <div class="item"><div class="bar" style="height:112px"></div><div class="px">112</div><div class="lbl">28</div></div>
+  </div>
+</body>
+</html>

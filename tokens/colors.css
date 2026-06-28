@@ -1,0 +1,70 @@
+/* ============================================================
+   Baheth — Color tokens
+   A light theme: neutral greys + one primary green (Salem) and
+   two cool support hues (Spindle blue, Wedgewood teal).
+   ============================================================ */
+
+:root {
+  /* ---- Neutral ramp (shade-0 darkest → lightest) ---- */
+  --color-white: #ffffff;
+  --color-neutral-lightest: #f2f2f2; /* shade-1 */
+  --color-neutral-lighter: #d9d9d9;  /* shade-2 */
+  --color-neutral-light: #b3b4b4;    /* shade-3 */
+  --color-neutral: #818383;          /* shade-4 */
+  --color-neutral-dark: #4f5152;     /* shade-5 */
+  --color-neutral-darker: #1d1f20;   /* shade-6 */
+  --color-neutral-darkest: #040708;  /* shade-7 — near-black ink */
+
+  /* ---- Salem (primary green) ---- */
+  --color-salem-lightest: #e6f3ed;
+  --color-salem-lighter: #cee7dc;
+  --color-salem-light: #53ab87;
+  --color-salem: #0a8754;            /* brand primary */
+  --color-salem-dark: #086c43;       /* primary hover */
+  --color-salem-darker: #043621;     /* deep section bg */
+  --color-salem-darkest: #032819;    /* deepest section bg */
+
+  /* ---- Spindle (cool light blue) ---- */
+  --color-spindle-lightest: #f8fbfc;
+  --color-spindle-lighter: #f2f7fa;
+  --color-spindle-light: #d2e3f0;
+  --color-spindle: #bfd7ea;          /* soft tint section bg */
+  --color-spindle-dark: #98acbb;
+  --color-spindle-darker: #4c565d;
+  --color-spindle-darkest: #394046;
+
+  /* ---- Wedgewood (teal) ---- */
+  --color-wedgewood-lightest: #edf3f5;
+  --color-wedgewood-lighter: #dce8ec;
+  --color-wedgewood-light: #84aebf;
+  --color-wedgewood: #508ca4;
+  --color-wedgewood-dark: #407083;
+  --color-wedgewood-darker: #203841;
+  --color-wedgewood-darkest: #182a31;
+
+  /* ---- Alpha overlays (ink on light / white on dark) ---- */
+  --color-ink-5: color-mix(in srgb, var(--color-neutral-darkest), transparent 95%);
+  --color-ink-10: color-mix(in srgb, var(--color-neutral-darkest), transparent 90%);
+  --color-ink-15: color-mix(in srgb, var(--color-neutral-darkest), transparent 85%);
+  --color-ink-20: color-mix(in srgb, var(--color-neutral-darkest), transparent 80%);
+  --color-ink-50: color-mix(in srgb, var(--color-neutral-darkest), transparent 50%);
+  --color-ink-60: color-mix(in srgb, var(--color-neutral-darkest), transparent 40%);
+  --color-white-5: color-mix(in srgb, var(--color-white), transparent 95%);
+  --color-white-10: color-mix(in srgb, var(--color-white), transparent 90%);
+  --color-white-15: color-mix(in srgb, var(--color-white), transparent 85%);
+  --color-white-20: color-mix(in srgb, var(--color-white), transparent 80%);
+  --color-white-50: color-mix(in srgb, var(--color-white), transparent 50%);
+
+  /* ---- Semantic aliases (default = light surface) ---- */
+  --text-body: var(--color-neutral-darkest);
+  --text-muted: var(--color-neutral);
+  --text-inverse: var(--color-white);
+  --accent: var(--color-salem);
+  --accent-hover: var(--color-salem-dark);
+  --surface-page: var(--color-white);
+  --surface-card: var(--color-white);
+  --surface-sunken: var(--color-neutral-lightest);
+  --border-subtle: var(--color-ink-15);
+  --border-strong: var(--color-ink-20);
+  --focus-ring: var(--color-salem);
+}

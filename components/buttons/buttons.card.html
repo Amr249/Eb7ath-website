@@ -1,0 +1,56 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Buttons" subtitle="Primary, alternate, secondary, link, ghost · sizes · disabled" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-page); font-family: var(--font-body); }
+  .stack { display: flex; flex-direction: column; gap: 14px; }
+  .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .dark { padding: 18px; border-radius: 14px; }
+  .cap { width: 100%; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 2px; }
+  .scheme-1 .cap { color: var(--color-white-50); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Button, IconButton, Icon } = window.BahethDesignSystem_c51e92;
+  const chev = <Icon name="chevron-right" size={18} />;
+  function Demo() {
+    return (
+      <div className="stack">
+        <div className="row">
+          <span className="cap">On light</span>
+          <Button>Start</Button>
+          <Button variant="secondary">Learn more</Button>
+          <Button variant="link" iconRight={chev}>Explore</Button>
+          <Button variant="ghost">Ghost</Button>
+          <IconButton icon="search" label="Search" />
+        </div>
+        <div className="row">
+          <span className="cap">Sizes &amp; states</span>
+          <Button size="sm">Small</Button>
+          <Button>Medium</Button>
+          <Button size="lg">Large</Button>
+          <Button disabled>Disabled</Button>
+          <Button iconLeft={<Icon name="plus" size={18} />}>New project</Button>
+        </div>
+        <div className="row dark scheme-1 logo-alt">
+          <span className="cap">On dark (scheme-1)</span>
+          <Button variant="alternate">Start</Button>
+          <Button variant="secondary">Learn more</Button>
+          <Button variant="link" iconRight={chev}>Explore</Button>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<Demo />);
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x140" name="Semantic roles" subtitle="How raw palette maps to text, accent, surface & border" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .item { display: flex; flex-direction: column; gap: 8px; }
+  .chip { height: 56px; border-radius: 12px; border: 1px solid var(--border-subtle); }
+  .role { font-size: 12px; font-weight: 600; color: var(--text-body); }
+  .tok { font-size: 11px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="chip" style="background:var(--text-body)"></div><div class="role">Text / ink</div><div class="tok">--text-body</div></div>
+    <div class="item"><div class="chip" style="background:var(--accent)"></div><div class="role">Accent</div><div class="tok">--accent</div></div>
+    <div class="item"><div class="chip" style="background:var(--surface-sunken)"></div><div class="role">Sunken surface</div><div class="tok">--surface-sunken</div></div>
+    <div class="item"><div class="chip" style="background:var(--color-white); border-color:var(--border-strong)"></div><div class="role">Card surface</div><div class="tok">--surface-card</div></div>
+    <div class="item"><div class="chip" style="background:var(--color-white); border:2px solid var(--border-subtle)"></div><div class="role">Border</div><div class="tok">--border-subtle</div></div>
+  </div>
+</body>
+</html>

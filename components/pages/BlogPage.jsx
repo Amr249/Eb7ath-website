@@ -1,0 +1,97 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/buttons/Button.jsx";
+import { Icon } from "@/components/icon/Icon.jsx";
+import { Badge } from "@/components/display/Badge.jsx";
+import { Input } from "@/components/forms/Input.jsx";
+import { Tabs } from "@/components/navigation/Tabs.jsx";
+import { SiteHeader } from "@/components/site/SiteHeader.jsx";
+import { SiteFooter } from "@/components/site/SiteFooter.jsx";
+import { useLanguage } from "@/lib/useLanguage";
+import { blogDict } from "@/lib/i18n/blog";
+import { IMAGES } from "@/lib/assets";
+import { Reveal, RevealGroup, RevealItem, scaleIn, motion, fadeUp } from "@/lib/motion";
+
+export function BlogPage() {
+  const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
+  const t = blogDict(lang);
+  const [tab, setTab] = useState("all");
+
+  const visiblePosts = tab === "all" ? t.posts : t.posts.filter((p) => p.cat === tab);
+
+  if (!mounted) return null;
+
+  return (
+    <main key={lang} className={`bb-root ${langClass}`} dir={dir} style={{ fontFamily: "var(--font-body)", color: "var(--text-body)" }}>
+      <SiteHeader page="blog" active="blog" lang={t} locale={lang} langLabel={langLabel} toggleLang={toggleLang} />
+
+      <section className="scheme-1 logo-alt" style={{ paddingBlock: "var(--section-py)" }}>
+        <Reveal className="baheth-container" style={{ maxWidth: "48rem", textAlign: "center" }}>
+          <p className="bh-eyebrow">{t.hero.eyebrow}</p>
+          <h1 style={{ margin: "16px 0 20px" }}>{t.hero.h1}</h1>
+          <p style={{ fontSize: "var(--text-medium)", color: "var(--color-white-50)" }}>{t.hero.sub}</p>
+          <div style={{ marginTop: 28, display: "flex", justifyContent: "center", gap: 16 }}>
+            <Button variant="alternate">{t.hero.read}</Button>
+            <Button variant="secondary">{t.hero.subscribe}</Button>
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="scheme-3" style={{ paddingBlock: "var(--section-py)" }}>
+        <div className="baheth-container">
+          <Reveal style={{ textAlign: "center", maxWidth: "48rem", margin: "0 auto 48px" }}>
+            <p className="bh-eyebrow">{t.feat.eyebrow}</p>
+            <h2 style={{ margin: "16px 0 20px" }}>{t.feat.h2}</h2>
+            <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.feat.lead}</p>
+          </Reveal>
+          <Reveal style={{ display: "flex", justifyContent: "center", marginBottom: 56 }}>
+            <Tabs tabs={t.tabs} value={tab} onChange={setTab} />
+          </Reveal>
+          <RevealGroup key={tab} className="bb-grid">
+            {visiblePosts.map((post, i) => (
+              <motion.div key={i} className="bh-card" variants={fadeUp} whileHover={{ y: -6 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
+                <img className="bb-card__img" src={post.img} alt="" />
+                <div className="bb-card__body">
+                  <div className="bb-meta">
+                    <Badge>{post.category}</Badge>
+                    <span style={{ fontSize: "var(--text-small)", fontWeight: 600 }}>{post.read}</span>
+                  </div>
+                  <h3 style={{ fontSize: "var(--text-h5)", marginBottom: 8 }}>{post.title}</h3>
+                  <p style={{ color: "var(--text-muted)" }}>{post.excerpt}</p>
+                  <div style={{ marginTop: 20 }}>
+                    <Button variant="link">{t.feat.readMore} <Icon name="chevron-right" size={18} /></Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </RevealGroup>
+          {visiblePosts.length === 0 && (
+            <p style={{ textAlign: "center", color: "var(--text-muted)", padding: "48px 0" }}>{t.feat.empty}</p>
+          )}
+        </div>
+      </section>
+
+      <section className="scheme-5" style={{ paddingBlock: "var(--section-py)" }}>
+        <div className="baheth-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Reveal style={{ textAlign: "center", maxWidth: "32rem", margin: "0 auto 48px" }}>
+            <h2 style={{ marginBottom: 20 }}>{t.news.h2}</h2>
+            <p style={{ fontSize: "var(--text-medium)" }}>{t.news.lead}</p>
+            <div style={{ maxWidth: "24rem", margin: "24px auto 0" }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-end" }}>
+                <Input type="email" placeholder={t.news.placeholder} />
+                <Button>{t.news.join}</Button>
+              </div>
+              <p style={{ fontSize: "var(--text-tiny)", color: "var(--scheme-muted)", marginTop: 12 }}>{t.news.note}</p>
+            </div>
+          </Reveal>
+          <Reveal variants={scaleIn} className="media-zoom" style={{ width: "100%", borderRadius: "var(--radius-image)", overflow: "hidden" }}>
+            <img src={IMAGES.blogNewsletter} alt="" style={{ width: "100%", aspectRatio: "16/6", objectFit: "cover", display: "block" }} />
+          </Reveal>
+        </div>
+      </section>
+
+      <SiteFooter footer={{ ...t.footer, nav: t.nav }} locale={lang} />
+    </main>
+  );
+}

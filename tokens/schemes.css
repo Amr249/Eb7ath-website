@@ -1,0 +1,73 @@
+/* ============================================================
+   Baheth — Color schemes
+   Sections are painted by applying ONE scheme class. Each scheme
+   resolves --scheme-* variables that children read for text,
+   accent, and border so contrast stays correct automatically.
+
+   scheme-1  Deepest green   (#032819)  — dark, white text
+   scheme-2  Deep green      (#043621)  — dark, white text
+   scheme-3  White           (#FFFFFF)  — light, ink text
+   scheme-4  Neutral grey    (#D9D9D9)  — light, ink text
+   scheme-5  Spindle blue    (#BFD7EA)  — light, ink text
+   ============================================================ */
+
+.scheme-1,
+.scheme-2,
+.scheme-3,
+.scheme-4,
+.scheme-5 {
+  background-color: var(--scheme-bg);
+  color: var(--scheme-text);
+}
+
+.scheme-1 {
+  --scheme-bg: var(--color-salem-darkest);
+  --scheme-text: var(--color-white);
+  --scheme-accent: var(--color-white);
+  --scheme-border: var(--color-white-20);
+  --scheme-muted: var(--color-white-50);
+  --scheme-btn-text: var(--color-neutral-darkest);
+}
+
+.scheme-2 {
+  --scheme-bg: var(--color-salem-darker);
+  --scheme-text: var(--color-white);
+  --scheme-accent: var(--color-white);
+  --scheme-border: var(--color-white-20);
+  --scheme-muted: var(--color-white-50);
+  --scheme-btn-text: var(--color-neutral-darkest);
+}
+
+.scheme-3 {
+  --scheme-bg: var(--color-white);
+  --scheme-text: var(--color-neutral-darkest);
+  --scheme-accent: var(--color-salem);
+  --scheme-border: var(--color-ink-15);
+  --scheme-muted: var(--color-neutral);
+  --scheme-btn-text: var(--color-white);
+}
+
+.scheme-4 {
+  --scheme-bg: var(--color-neutral-lighter);
+  --scheme-text: var(--color-neutral-darkest);
+  --scheme-accent: var(--color-neutral-darkest);
+  --scheme-border: var(--color-ink-15);
+  --scheme-muted: var(--color-neutral-dark);
+  --scheme-btn-text: var(--color-white);
+}
+
+.scheme-5 {
+  --scheme-bg: var(--color-spindle);
+  --scheme-text: var(--color-neutral-darkest);
+  --scheme-accent: var(--color-neutral-darkest);
+  --scheme-border: var(--color-ink-15);
+  --scheme-muted: var(--color-spindle-darker);
+  --scheme-btn-text: var(--color-white);
+}
+
+/* Logo recolor: BAHETH wordmark ships black; on dark schemes flip
+   it (and the DNA mark) to solid white. Apply .logo-alt on the
+   scheme-1 / scheme-2 sections that contain the logo. */
+.logo-alt img[src*="logo" i] {
+  filter: brightness(0) invert(1);
+}

@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Neutral ramp" subtitle="Greys from near-black ink (#040708) to white" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); }
+  .row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
+  .sw { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-subtle); }
+  .chip { height: 64px; }
+  .meta { padding: 8px 10px; font-family: var(--font-body); }
+  .name { font-size: 12px; font-weight: 600; color: var(--text-body); }
+  .hex { font-size: 11px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-darkest)"></div><div class="meta"><div class="name">darkest</div><div class="hex">#040708</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-darker)"></div><div class="meta"><div class="name">darker</div><div class="hex">#1D1F20</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-dark)"></div><div class="meta"><div class="name">dark</div><div class="hex">#4F5152</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral)"></div><div class="meta"><div class="name">neutral</div><div class="hex">#818383</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-light)"></div><div class="meta"><div class="name">light</div><div class="hex">#B3B4B4</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-lighter)"></div><div class="meta"><div class="name">lighter</div><div class="hex">#D9D9D9</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-neutral-lightest)"></div><div class="meta"><div class="name">lightest</div><div class="hex">#F2F2F2</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--color-white)"></div><div class="meta"><div class="name">white</div><div class="hex">#FFFFFF</div></div></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,292 @@
+/* ============================================================
+   Baheth — Component classes
+   Class-based styling for the reusable primitives. Every value
+   resolves through design tokens (and --scheme-* when inside a
+   scheme), so components recolor automatically per section.
+   Prefix: .bh-
+   ============================================================ */
+
+/* ---------------------------------------------------------------
+   Button
+   --------------------------------------------------------------- */
+.bh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-button);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+  padding: 0.6rem 1rem;
+  transition: background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard),
+    opacity var(--duration-base) var(--ease-standard);
+}
+.bh-btn:focus-visible {
+  outline: 2px solid var(--scheme-accent, var(--accent));
+  outline-offset: 2px;
+}
+.bh-btn:disabled { pointer-events: none; opacity: 0.5; }
+.bh-btn svg { width: 1.25em; height: 1.25em; flex: none; }
+
+.bh-btn--sm { padding: 0.45rem 0.8rem; font-size: var(--text-small); }
+.bh-btn--lg { padding: 0.8rem 1.5rem; font-size: var(--text-large); }
+
+/* Primary — Salem green, the one saturated CTA */
+.bh-btn--primary {
+  background-color: var(--color-salem);
+  border-color: var(--color-salem);
+  color: var(--color-white);
+}
+.bh-btn--primary:hover {
+  background-color: var(--color-salem-dark);
+  border-color: var(--color-salem-dark);
+}
+
+/* Alternate — white fill, for use on dark (green/image) schemes */
+.bh-btn--alternate {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-neutral-darkest);
+}
+.bh-btn--alternate:hover {
+  background-color: var(--color-neutral-lighter);
+  border-color: var(--color-neutral-lighter);
+}
+
+/* Secondary — outlined, transparent; inherits the scheme's ink */
+.bh-btn--secondary {
+  background-color: transparent;
+  border-color: var(--scheme-border, var(--border-strong));
+  color: var(--scheme-text, var(--text-body));
+  backdrop-filter: blur(10px);
+}
+.bh-btn--secondary:hover {
+  background-color: color-mix(in srgb, var(--scheme-text, var(--text-body)), transparent 92%);
+}
+
+/* Link — text + chevron, no chrome */
+.bh-btn--link {
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+  gap: 0.4rem;
+  color: var(--scheme-text, var(--text-body));
+}
+.bh-btn--link:hover { opacity: 0.7; }
+
+/* Ghost — invisible until hover */
+.bh-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--scheme-text, var(--text-body));
+}
+.bh-btn--ghost:hover {
+  background-color: var(--color-neutral-darkest);
+  color: var(--color-white);
+}
+
+/* Icon-only square */
+.bh-btn--icon { padding: 0; width: 2.5rem; height: 2.5rem; }
+.bh-btn--icon.bh-btn--sm { width: 2rem; height: 2rem; }
+
+/* ---------------------------------------------------------------
+   Badge / Tag
+   --------------------------------------------------------------- */
+.bh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+  border-radius: var(--radius-badge);
+  padding: 0.25rem 0.6rem;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--scheme-text, var(--text-body));
+  line-height: 1.2;
+}
+.bh-badge--solid {
+  background-color: var(--color-salem);
+  border-color: var(--color-salem);
+  color: var(--color-white);
+}
+.bh-badge--soft {
+  background-color: var(--color-salem-lightest);
+  border-color: transparent;
+  color: var(--color-salem-dark);
+}
+/* Tag — squarer corners, for filter/category chips */
+.bh-tag { border-radius: var(--radius-tag); }
+
+/* ---------------------------------------------------------------
+   Card — outlined surface, flat by default
+   --------------------------------------------------------------- */
+.bh-card {
+  overflow: hidden;
+  border: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+  border-radius: var(--radius-card);
+  background-color: var(--scheme-bg, var(--surface-card));
+  color: var(--scheme-text, var(--text-body));
+}
+.bh-card--transparent {
+  background-color: transparent;
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+.bh-card--elevated { border-color: transparent; box-shadow: var(--shadow-md); }
+.bh-card__body { padding: var(--space-6); }
+.bh-card__body--lg { padding: var(--space-8); }
+.bh-card__media { display: block; width: 100%; }
+.bh-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------------------------------------------------------------
+   Input — underline field
+   --------------------------------------------------------------- */
+.bh-field { position: relative; display: flex; width: 100%; align-items: center; }
+.bh-input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0;
+  border: 0;
+  border-bottom: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-medium);
+  color: var(--scheme-text, var(--text-body));
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+.bh-input::placeholder { color: color-mix(in srgb, var(--scheme-text, var(--text-body)), transparent 50%); }
+.bh-input:focus { outline: none; border-bottom-color: var(--scheme-accent, var(--accent)); }
+.bh-input--boxed {
+  border: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+  border-radius: var(--radius-input);
+  padding: 0.65rem 0.85rem;
+}
+.bh-field__icon {
+  position: absolute; left: 0; display: inline-flex;
+  color: color-mix(in srgb, var(--scheme-text, var(--text-body)), transparent 35%);
+}
+.bh-field--icon .bh-input { padding-left: 1.9rem; }
+
+/* ---------------------------------------------------------------
+   Avatar
+   --------------------------------------------------------------- */
+.bh-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem; flex: none;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background-color: var(--color-salem-lightest);
+  color: var(--color-salem-dark);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+}
+.bh-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.bh-avatar--sm { width: 2.25rem; height: 2.25rem; font-size: var(--text-small); }
+.bh-avatar--lg { width: 4rem; height: 4rem; font-size: var(--text-h6); }
+
+/* ---------------------------------------------------------------
+   Accordion
+   --------------------------------------------------------------- */
+.bh-accordion { width: 100%; }
+.bh-accordion__item {
+  border-bottom: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+}
+.bh-accordion__item:first-child {
+  border-top: var(--border-width) solid var(--scheme-border, var(--border-subtle));
+}
+.bh-accordion__trigger {
+  display: flex; width: 100%; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1.1rem 0;
+  background: transparent; border: 0;
+  font-family: var(--font-body); font-weight: var(--font-weight-bold);
+  font-size: var(--text-medium); text-align: left;
+  color: var(--scheme-text, var(--text-body));
+}
+.bh-accordion__icon { transition: transform var(--duration-slow) var(--ease-standard); flex: none; }
+.bh-accordion__item[data-open="true"] .bh-accordion__icon { transform: rotate(180deg); }
+.bh-accordion__panel {
+  overflow: hidden;
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-slow) var(--ease-standard);
+}
+.bh-accordion__item[data-open="true"] .bh-accordion__panel { grid-template-rows: 1fr; }
+.bh-accordion__panel > div { overflow: hidden; }
+.bh-accordion__content { padding-bottom: 1.25rem; color: var(--scheme-muted, var(--text-muted)); }
+
+/* ---------------------------------------------------------------
+   Tabs — pill segmented control
+   --------------------------------------------------------------- */
+.bh-tabs__list {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  flex-wrap: wrap;
+}
+.bh-tab {
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-button);
+  padding: 0.5rem 1rem;
+  background: transparent;
+  font-family: var(--font-body); font-weight: var(--font-weight-medium);
+  font-size: var(--text-medium);
+  color: var(--scheme-text, var(--text-body));
+  transition: border-color var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard);
+}
+.bh-tab:hover { border-color: var(--scheme-border, var(--border-subtle)); }
+.bh-tab[data-active="true"] {
+  border-color: var(--scheme-text, var(--text-body));
+}
+
+/* ---------------------------------------------------------------
+   Checkbox & Switch
+   --------------------------------------------------------------- */
+.bh-checkbox { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; font-family: var(--font-body); color: var(--scheme-text, var(--text-body)); }
+.bh-checkbox input { position: absolute; opacity: 0; width: 0; height: 0; }
+.bh-checkbox__box {
+  width: 1.15rem; height: 1.15rem; flex: none;
+  border: var(--border-width) solid var(--scheme-border, var(--border-strong));
+  border-radius: var(--radius-checkbox);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-white);
+  transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+.bh-checkbox__box svg { width: 0.85rem; height: 0.85rem; opacity: 0; }
+.bh-checkbox input:checked + .bh-checkbox__box {
+  background-color: var(--color-salem); border-color: var(--color-salem);
+}
+.bh-checkbox input:checked + .bh-checkbox__box svg { opacity: 1; }
+.bh-checkbox input:focus-visible + .bh-checkbox__box { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.bh-switch { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+.bh-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.bh-switch__track {
+  width: 2.4rem; height: 1.4rem; flex: none;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-light);
+  position: relative;
+  transition: background-color var(--duration-base) var(--ease-standard);
+}
+.bh-switch__thumb {
+  position: absolute; top: 0.15rem; left: 0.15rem;
+  width: 1.1rem; height: 1.1rem; border-radius: var(--radius-full);
+  background: var(--color-white); box-shadow: var(--shadow-xs);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.bh-switch input:checked + .bh-switch__track { background-color: var(--color-salem); }
+.bh-switch input:checked + .bh-switch__track .bh-switch__thumb { transform: translateX(1rem); }
+.bh-switch input:focus-visible + .bh-switch__track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------
+   Eyebrow / tagline label (used above headings everywhere)
+   --------------------------------------------------------------- */
+.bh-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-medium);
+  color: var(--scheme-text, var(--text-body));
+}

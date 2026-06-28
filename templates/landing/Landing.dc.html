@@ -1,0 +1,1466 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <!-- @template name="Baheth Landing" description="Complete bilingual (EN/AR, RTL) Baheth homepage: nav, hero, pathways, story, stats, services, opportunities, testimonials, CTA, FAQ, footer" -->
+      <helmet>
+        <script src="./ds-base.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <style>
+          .lang-ar {
+            --font-display: "Alexandria", sans-serif;
+            --font-body: "Alexandria", sans-serif;
+          }
+          .lang-ar h1,
+          .lang-ar h2,
+          .lang-ar h3,
+          .lang-ar h4,
+          .lang-ar h5,
+          .lang-ar h6 {
+            letter-spacing: 0;
+          }
+          /* Header */
+          .bl-hdr {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid var(--scheme-border);
+            background: var(--scheme-bg);
+          }
+          .bl-hdr__bar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+          }
+          .bl-hdr__links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+          .bl-hdr__links a {
+            padding: 8px 16px;
+            color: var(--scheme-text);
+            font-size: var(--text-medium);
+            border-radius: var(--radius-button);
+          }
+          .bl-hdr__links a:hover {
+            opacity: 0.65;
+          }
+          .bl-hdr__actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .bl-lang {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            border: 1px solid var(--scheme-border);
+            border-radius: var(--radius-button);
+            background: transparent;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: var(--text-small);
+            color: var(--scheme-text);
+            cursor: pointer;
+            transition: background-color var(--duration-base)
+              var(--ease-standard);
+          }
+          .bl-lang:hover {
+            background: var(--surface-sunken);
+          }
+          .bl-hdr__cta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .bl-burger {
+            display: none;
+            background: transparent;
+            border: 0;
+            color: var(--scheme-text);
+            padding: 6px;
+            cursor: pointer;
+          }
+          .bl-mobile {
+            display: none;
+          }
+          @media (max-width: 991px) {
+            .bl-hdr__links {
+              display: none;
+            }
+            .bl-hdr__cta {
+              display: none;
+            }
+            .bl-burger {
+              display: inline-flex;
+            }
+            .bl-mobile {
+              display: flex;
+              flex-direction: column;
+              padding: 8px var(--page-gutter) 24px;
+              gap: 2px;
+              border-top: 1px solid var(--scheme-border);
+            }
+            .bl-mobile a {
+              padding: 12px 4px;
+              color: var(--scheme-text);
+              font-weight: 500;
+              font-size: var(--text-large);
+            }
+            .bl-mobile__cta {
+              display: flex;
+              gap: 12px;
+              margin-top: 16px;
+            }
+            .bl-hero-grid {
+              grid-template-columns: 1fr !important;
+              gap: 32px !important;
+            }
+            .bl-3 {
+              grid-template-columns: 1fr !important;
+            }
+            .bl-stats {
+              grid-template-columns: 1fr 1fr !important;
+            }
+            .bl-stats-head {
+              grid-template-columns: 1fr !important;
+            }
+          }
+          @media (max-width: 560px) {
+            .bl-stats {
+              grid-template-columns: 1fr !important;
+            }
+          }
+          .bl-svc-grid {
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 80vh;
+          }
+          .bl-svc-text {
+            padding: 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .bl-svc-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+          .bl-svc:nth-child(even) .bl-svc-img {
+            order: -1;
+          }
+          @media (max-width: 767px) {
+            .bl-svc {
+              position: static !important;
+              height: auto !important;
+              margin-bottom: 24px !important;
+              transform: none !important;
+            }
+            .bl-svc-grid {
+              grid-template-columns: 1fr !important;
+              height: auto !important;
+            }
+            .bl-svc-img {
+              min-height: 240px;
+            }
+          }
+          .bl-testi {
+            display: grid;
+            grid-template-columns: 0.75fr 1fr;
+            min-height: 90vh;
+          }
+          .bl-testi__intro {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px;
+          }
+          .bl-testi__right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 32px 48px 32px 0;
+            border-left: 1px solid var(--scheme-border);
+            overflow: hidden;
+            align-items: start;
+          }
+          .lang-ar .bl-testi__right {
+            padding: 32px 0 32px 48px;
+            border-left: 0;
+            border-right: 1px solid var(--scheme-border);
+          }
+          .bl-testi__col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            will-change: transform;
+          }
+          .bl-voice {
+            padding: 28px;
+          }
+          .bl-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 16px;
+            color: var(--scheme-text);
+          }
+          .bl-voice__person {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+          }
+          @media (max-width: 991px) {
+            .bl-testi {
+              grid-template-columns: 1fr;
+              min-height: 0;
+            }
+            .bl-testi__right,
+            .lang-ar .bl-testi__right {
+              grid-template-columns: 1fr 1fr;
+              padding: 24px;
+              border-left: 0;
+              border-right: 0;
+              border-top: 1px solid var(--scheme-border);
+              overflow: visible;
+            }
+            .bl-testi__col {
+              transform: none !important;
+            }
+          }
+          @media (max-width: 560px) {
+            .bl-testi__right {
+              grid-template-columns: 1fr;
+            }
+            .bl-testi__intro {
+              padding: 32px;
+            }
+          }
+        </style>
+      </helmet>
+
+      <main
+        class="bl-root {{ langClass }}"
+        dir="{{ dir }}"
+        style="font-family: var(--font-body); color: var(--text-body)"
+      >
+        <!-- ===== Navbar ===== -->
+        <header class="bl-hdr scheme-3">
+          <div class="baheth-container bl-hdr__bar">
+            <a href="./Landing.dc.html"
+              ><img
+                src="../../assets/logo/logo-light.png"
+                alt="Baheth"
+                style="height: 30px; width: auto; display: block"
+            /></a>
+            <nav class="bl-hdr__links">
+              <a href="./Landing.dc.html" style="font-weight: 600"
+                >{{ t.nav.home }}</a
+              >
+              <a href="../about/About.dc.html">{{ t.nav.about }}</a>
+              <a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a>
+            </nav>
+            <div class="bl-hdr__actions">
+              <button class="bl-lang" onClick="{{ toggleLang }}">
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                  name="globe"
+                  size="16"
+                  hint-size="16px,16px"
+                ></x-import>
+                {{ langLabel }}
+              </button>
+              <div class="bl-hdr__cta">
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  size="sm"
+                  hint-size="72px,36px"
+                  >{{ t.nav.start }}</x-import
+                >
+              </div>
+              <button
+                class="bl-burger"
+                aria-label="Menu"
+                onClick="{{ toggleMenu }}"
+              >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                  name="{{ menuIcon }}"
+                  size="26"
+                  hint-size="26px,26px"
+                ></x-import>
+              </button>
+            </div>
+          </div>
+          <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+            <div class="bl-mobile">
+              <a href="./Landing.dc.html" style="font-weight: 600"
+                >{{ t.nav.home }}</a
+              >
+              <a href="../about/About.dc.html">{{ t.nav.about }}</a>
+              <a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a>
+              <div class="bl-mobile__cta">
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  size="sm"
+                  hint-size="72px,36px"
+                  >{{ t.nav.start }}</x-import
+                >
+              </div>
+            </div>
+          </sc-if>
+        </header>
+
+        <!-- ===== Hero ===== -->
+        <section
+          id="top"
+          class="scheme-1 logo-alt"
+          style="
+            position: relative;
+            overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: flex-end;
+          "
+        >
+          <img
+            src="../../assets/images/home-hero-header-section.jpg"
+            alt=""
+            style="
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              z-index: 0;
+            "
+          />
+          <div
+            style="
+              position: absolute;
+              inset: 0;
+              background: rgba(4, 7, 8, 0.58);
+              z-index: 1;
+            "
+          ></div>
+          <div
+            class="bl-hero-grid baheth-container"
+            style="
+              position: relative;
+              z-index: 2;
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 80px;
+              padding-block: 96px;
+              align-items: end;
+            "
+          >
+            <div>
+              <h1
+                style="
+                  color: var(--color-white);
+                  max-width: 16ch;
+                  margin-bottom: 28px;
+                "
+              >
+                {{ t.hero.title }}
+              </h1>
+              <div style="display: flex; gap: 16px; flex-wrap: wrap">
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="alternate"
+                  hint-size="110px,44px"
+                  >{{ t.hero.start }}</x-import
+                >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="secondary"
+                  hint-size="140px,44px"
+                  >{{ t.hero.learn }}</x-import
+                >
+              </div>
+            </div>
+            <p
+              style="
+                color: var(--color-white);
+                font-size: var(--text-medium);
+                max-width: 44ch;
+              "
+            >
+              {{ t.hero.sub }}
+            </p>
+          </div>
+        </section>
+
+        <!-- ===== Pathways ===== -->
+        <section
+          class="scheme-2 logo-alt"
+          style="padding-block: var(--section-py)"
+        >
+          <div class="baheth-container">
+            <div
+              style="text-align: center; max-width: 48rem; margin: 0 auto 64px"
+            >
+              <p class="bh-eyebrow">{{ t.path.eyebrow }}</p>
+              <h2 style="margin: 16px 0 20px">{{ t.path.h2 }}</h2>
+              <p
+                style="
+                  font-size: var(--text-large);
+                  color: var(--color-white-50);
+                "
+              >
+                {{ t.path.lead }}
+              </p>
+            </div>
+            <div
+              class="bl-3"
+              style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px"
+            >
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                variant="transparent"
+                hint-size="100%,420px"
+              >
+                <div
+                  style="display: flex; flex-direction: column; height: 100%"
+                >
+                  <div style="padding: 32px">
+                    <p class="bh-eyebrow">{{ t.path.c1eyebrow }}</p>
+                    <h3 style="margin: 8px 0 12px">{{ t.path.c1title }}</h3>
+                    <p>{{ t.path.c1body }}</p>
+                    <div style="margin-top: 20px">
+                      <x-import
+                        component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                        variant="link"
+                        hint-size="100px,24px"
+                        >{{ t.path.explore }}
+                        <x-import
+                          component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                          name="chevron-right"
+                          size="18"
+                          hint-size="18px,18px"
+                        ></x-import
+                      ></x-import>
+                    </div>
+                  </div>
+                  <img
+                    src="../../assets/images/home-features-list-section-0.jpg"
+                    alt=""
+                    style="
+                      margin-top: auto;
+                      width: 100%;
+                      aspect-ratio: 3/2;
+                      object-fit: cover;
+                      display: block;
+                    "
+                  />
+                </div>
+              </x-import>
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                variant="transparent"
+                hint-size="100%,420px"
+              >
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    height: 100%;
+                  "
+                >
+                  <div
+                    style="
+                      padding: 32px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                    "
+                  >
+                    <p class="bh-eyebrow">{{ t.path.c2eyebrow }}</p>
+                    <h3 style="margin: 8px 0 12px">{{ t.path.c2title }}</h3>
+                    <p>{{ t.path.c2body }}</p>
+                    <div style="margin-top: 20px">
+                      <x-import
+                        component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                        variant="link"
+                        hint-size="100px,24px"
+                        >{{ t.path.explore }}
+                        <x-import
+                          component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                          name="chevron-right"
+                          size="18"
+                          hint-size="18px,18px"
+                        ></x-import
+                      ></x-import>
+                    </div>
+                  </div>
+                  <img
+                    src="../../assets/images/home-features-list-section-1.jpg"
+                    alt=""
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      display: block;
+                    "
+                  />
+                </div>
+              </x-import>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== About / Story ===== -->
+        <section
+          id="about"
+          class="scheme-3"
+          style="padding-block: var(--section-py)"
+        >
+          <div
+            class="baheth-container"
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <div
+              style="text-align: center; max-width: 48rem; margin: 0 auto 64px"
+            >
+              <p class="bh-eyebrow">{{ t.story.eyebrow }}</p>
+              <h2 style="margin: 16px 0 20px">{{ t.story.h2 }}</h2>
+              <p style="font-size: var(--text-large); color: var(--text-muted)">
+                {{ t.story.lead }}
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 16px;
+                  justify-content: center;
+                  margin-top: 24px;
+                "
+              >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="secondary"
+                  hint-size="90px,44px"
+                  >{{ t.story.learn }}</x-import
+                >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="link"
+                  hint-size="90px,24px"
+                  >{{ t.story.about }}
+                  <x-import
+                    component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                    name="chevron-right"
+                    size="18"
+                    hint-size="18px,18px"
+                  ></x-import
+                ></x-import>
+              </div>
+            </div>
+            <img
+              src="../../assets/images/home-about-section.jpg"
+              alt=""
+              style="
+                width: 100%;
+                border-radius: var(--radius-image);
+                aspect-ratio: 16/7;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          </div>
+        </section>
+
+        <!-- ===== Stats ===== -->
+        <section class="scheme-4" style="padding-block: var(--section-py)">
+          <div class="baheth-container">
+            <div
+              class="bl-stats-head"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+                margin-bottom: 64px;
+              "
+            >
+              <h3>{{ t.stats.h3 }}</h3>
+              <p>{{ t.stats.p }}</p>
+            </div>
+            <div
+              class="bl-stats"
+              style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 1fr;
+                gap: 32px;
+              "
+            >
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                hint-size="100%,300px"
+                style="grid-row: span 2"
+              >
+                <div
+                  style="
+                    padding: 32px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    height: 100%;
+                  "
+                >
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 500;
+                      font-size: 5rem;
+                      line-height: 1.1;
+                    "
+                  >
+                    500+
+                  </div>
+                  <h4>{{ t.stats.l1 }}</h4>
+                </div>
+              </x-import>
+              <div style="border-radius: var(--radius-image); overflow: hidden">
+                <img
+                  src="../../assets/images/home-stats-section-0.jpg"
+                  alt=""
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    aspect-ratio: 3/2;
+                    display: block;
+                  "
+                />
+              </div>
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                hint-size="100%,160px"
+              >
+                <div style="padding: 32px; text-align: center">
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 500;
+                      font-size: 4rem;
+                      line-height: 1.1;
+                    "
+                  >
+                    300+
+                  </div>
+                  <h4>{{ t.stats.l2 }}</h4>
+                </div>
+              </x-import>
+              <div style="border-radius: var(--radius-image); overflow: hidden">
+                <img
+                  src="../../assets/images/home-stats-section-1.jpg"
+                  alt=""
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    aspect-ratio: 3/2;
+                    display: block;
+                  "
+                />
+              </div>
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                hint-size="100%,160px"
+              >
+                <div style="padding: 32px; text-align: center">
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 500;
+                      font-size: 4rem;
+                      line-height: 1.1;
+                    "
+                  >
+                    50+
+                  </div>
+                  <h4>{{ t.stats.l3 }}</h4>
+                </div>
+              </x-import>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Services: sticky scroll-stack ===== -->
+        <section
+          id="services"
+          class="scheme-3"
+          style="padding-block: var(--section-py)"
+        >
+          <div class="baheth-container">
+            <div
+              style="text-align: center; max-width: 48rem; margin: 0 auto 64px"
+            >
+              <p class="bh-eyebrow">{{ t.svcHead.eyebrow }}</p>
+              <h2 style="margin: 16px 0 20px">{{ t.svcHead.h2 }}</h2>
+              <p style="font-size: var(--text-large); color: var(--text-muted)">
+                {{ t.svcHead.lead }}
+              </p>
+            </div>
+            <div id="bl-services-stack" style="position: relative">
+              <sc-for list="{{ t.services }}" as="s" hint-placeholder-count="4">
+                <div
+                  class="bl-svc"
+                  style="
+                    position: sticky;
+                    top: 10%;
+                    height: 80vh;
+                    margin-bottom: 10vh;
+                    transform-origin: center top;
+                  "
+                >
+                  <x-import
+                    component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                    hint-size="100%,520px"
+                  >
+                    <div class="bl-svc-grid">
+                      <div class="bl-svc-text">
+                        <p class="bh-eyebrow">{{ s.eyebrow }}</p>
+                        <h2
+                          style="font-size: var(--text-h3); margin: 12px 0 16px"
+                        >
+                          {{ s.title }}
+                        </h2>
+                        <p style="color: var(--text-muted)">{{ s.body }}</p>
+                        <div
+                          style="
+                            margin-top: 24px;
+                            display: flex;
+                            gap: 16px;
+                            align-items: center;
+                          "
+                        >
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                            variant="secondary"
+                            hint-size="90px,44px"
+                            >{{ s.learn }}</x-import
+                          >
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                            variant="link"
+                            hint-size="100px,24px"
+                            >{{ s.explore }}
+                            <x-import
+                              component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                              name="chevron-right"
+                              size="18"
+                              hint-size="18px,18px"
+                            ></x-import
+                          ></x-import>
+                        </div>
+                      </div>
+                      <img class="bl-svc-img" src="{{ s.img }}" alt="" />
+                    </div>
+                  </x-import>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Research opportunities ===== -->
+        <section
+          id="opportunities"
+          class="scheme-5"
+          style="padding-block: var(--section-py)"
+        >
+          <div class="baheth-container">
+            <div
+              style="text-align: center; max-width: 48rem; margin: 0 auto 64px"
+            >
+              <p class="bh-eyebrow">{{ t.oppsHead.eyebrow }}</p>
+              <h2 style="margin: 16px 0 20px">{{ t.oppsHead.h2 }}</h2>
+              <p style="font-size: var(--text-large); color: var(--text-muted)">
+                {{ t.oppsHead.lead }}
+              </p>
+            </div>
+            <div
+              class="bl-3"
+              style="
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 32px;
+              "
+            >
+              <sc-for list="{{ t.projects }}" as="p" hint-placeholder-count="3">
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Card"
+                  hint-size="100%,420px"
+                >
+                  <img
+                    src="{{ p.img }}"
+                    alt=""
+                    style="
+                      width: 100%;
+                      aspect-ratio: 3/2;
+                      object-fit: cover;
+                      display: block;
+                    "
+                  />
+                  <div style="padding: 24px">
+                    <h5 style="font-size: var(--text-h5); margin-bottom: 8px">
+                      {{ p.title }}
+                    </h5>
+                    <p>{{ p.body }}</p>
+                    <div
+                      style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        margin: 16px 0;
+                      "
+                    >
+                      <sc-for
+                        list="{{ p.tags }}"
+                        as="tg"
+                        hint-placeholder-count="2"
+                      >
+                        <x-import
+                          component-from-global-scope="BahethDesignSystem_c51e92.Badge"
+                          hint-size="100px,28px"
+                          >{{ tg }}</x-import
+                        >
+                      </sc-for>
+                    </div>
+                    <x-import
+                      component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                      variant="link"
+                      hint-size="120px,24px"
+                      >{{ t.oppsHead.view }}
+                      <x-import
+                        component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                        name="chevron-right"
+                        size="18"
+                        hint-size="18px,18px"
+                      ></x-import
+                    ></x-import>
+                  </div>
+                </x-import>
+              </sc-for>
+            </div>
+            <div
+              style="display: flex; justify-content: center; margin-top: 48px"
+            >
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                variant="secondary"
+                hint-size="100px,44px"
+                >{{ t.oppsHead.viewAll }}</x-import
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Testimonials: Real voices ===== -->
+        <section
+          class="scheme-3"
+          style="overflow: hidden; padding-block: var(--section-py)"
+        >
+          <div class="baheth-container">
+            <x-import
+              component-from-global-scope="BahethDesignSystem_c51e92.Card"
+              hint-size="100%,90vh"
+            >
+              <div class="bl-testi">
+                <div class="bl-testi__intro">
+                  <h2 style="margin-bottom: 20px">{{ t.testi.h2 }}</h2>
+                  <p style="font-size: var(--text-medium)">{{ t.testi.sub }}</p>
+                  <div
+                    style="
+                      margin-top: 28px;
+                      display: flex;
+                      flex-wrap: wrap;
+                      align-items: center;
+                      gap: 16px;
+                    "
+                  >
+                    <x-import
+                      component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                      variant="secondary"
+                      hint-size="100px,44px"
+                      >{{ t.testi.explore }}</x-import
+                    >
+                    <x-import
+                      component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                      variant="link"
+                      hint-size="100px,24px"
+                      >{{ t.testi.connect }}
+                      <x-import
+                        component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                        name="chevron-right"
+                        size="18"
+                        hint-size="18px,18px"
+                      ></x-import
+                    ></x-import>
+                  </div>
+                </div>
+                <div class="bl-testi__right">
+                  <div class="bl-testi__col" id="bl-testi-left">
+                    <sc-for
+                      list="{{ t.voicesLeft }}"
+                      as="v"
+                      hint-placeholder-count="4"
+                    >
+                      <div class="bh-card bl-voice">
+                        <div class="bl-stars">
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import>
+                        </div>
+                        <h5
+                          style="
+                            font-size: var(--text-medium);
+                            font-weight: 400;
+                          "
+                        >
+                          {{ v.quote }}
+                        </h5>
+                        <div class="bl-voice__person">
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Avatar"
+                            initials="{{ v.initials }}"
+                            size="sm"
+                            hint-size="36px,36px"
+                          ></x-import>
+                          <div>
+                            <p style="font-weight: 600">{{ v.name }}</p>
+                            <p
+                              style="
+                                color: var(--text-muted);
+                                font-size: var(--text-small);
+                              "
+                            >
+                              {{ v.role }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div class="bl-testi__col" id="bl-testi-right">
+                    <sc-for
+                      list="{{ t.voicesRight }}"
+                      as="v"
+                      hint-placeholder-count="5"
+                    >
+                      <div class="bh-card bl-voice">
+                        <div class="bl-stars">
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import
+                          ><x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Icon"
+                            name="star"
+                            fill="true"
+                            size="22"
+                            hint-size="22px,22px"
+                          ></x-import>
+                        </div>
+                        <h5
+                          style="
+                            font-size: var(--text-medium);
+                            font-weight: 400;
+                          "
+                        >
+                          {{ v.quote }}
+                        </h5>
+                        <div class="bl-voice__person">
+                          <x-import
+                            component-from-global-scope="BahethDesignSystem_c51e92.Avatar"
+                            initials="{{ v.initials }}"
+                            size="sm"
+                            hint-size="36px,36px"
+                          ></x-import>
+                          <div>
+                            <p style="font-weight: 600">{{ v.name }}</p>
+                            <p
+                              style="
+                                color: var(--text-muted);
+                                font-size: var(--text-small);
+                              "
+                            >
+                              {{ v.role }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </x-import>
+          </div>
+        </section>
+
+        <!-- ===== CTA ===== -->
+        <section
+          class="scheme-1 logo-alt"
+          style="padding-block: var(--section-py)"
+        >
+          <div class="baheth-container">
+            <div
+              style="
+                border: 1px solid var(--scheme-border);
+                border-radius: var(--radius-card);
+                padding: 64px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              "
+            >
+              <h2 style="color: var(--color-white); margin-bottom: 20px">
+                {{ t.cta.h2 }}
+              </h2>
+              <p
+                style="
+                  font-size: var(--text-large);
+                  color: var(--color-white-50);
+                  max-width: 44ch;
+                  margin-bottom: 28px;
+                "
+              >
+                {{ t.cta.lead }}
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 16px;
+                  flex-wrap: wrap;
+                  justify-content: center;
+                "
+              >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="alternate"
+                  hint-size="120px,44px"
+                  >{{ t.cta.signup }}</x-import
+                >
+                <x-import
+                  component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                  variant="secondary"
+                  hint-size="100px,44px"
+                  >{{ t.cta.begin }}</x-import
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section
+          id="faq"
+          class="scheme-3"
+          style="padding-block: var(--section-py)"
+        >
+          <div class="baheth-container" style="max-width: 48rem">
+            <div style="text-align: center; margin-bottom: 64px">
+              <h2 style="margin-bottom: 20px">{{ t.faqHead.h2 }}</h2>
+              <p style="font-size: var(--text-large); color: var(--text-muted)">
+                {{ t.faqHead.lead }}
+              </p>
+            </div>
+            <x-import
+              component-from-global-scope="BahethDesignSystem_c51e92.Accordion"
+              type="single"
+              items="{{ t.faqItems }}"
+              default-open="{{ faqOpen }}"
+              hint-size="100%,400px"
+            ></x-import>
+            <div style="text-align: center; margin-top: 64px">
+              <h4 style="margin-bottom: 8px">{{ t.faqHead.more }}</h4>
+              <p style="margin-bottom: 24px">{{ t.faqHead.q }}</p>
+              <x-import
+                component-from-global-scope="BahethDesignSystem_c51e92.Button"
+                variant="secondary"
+                hint-size="100px,44px"
+                >{{ t.faqHead.contact }}</x-import
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Footer ===== -->
+        <footer
+          class="scheme-3"
+          style="
+            padding-block: 80px;
+            border-top: 1px solid var(--scheme-border);
+          "
+        >
+          <div class="baheth-container">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 32px;
+                padding-bottom: 64px;
+              "
+            >
+              <a href="./Landing.dc.html"
+                ><img
+                  src="../../assets/logo/logo-light.png"
+                  alt="Baheth"
+                  style="height: 32px; display: block"
+              /></a>
+              <ul
+                style="
+                  display: flex;
+                  gap: 24px;
+                  list-style: none;
+                  margin: 0;
+                  padding: 0;
+                  font-weight: 600;
+                  flex-wrap: wrap;
+                  justify-content: center;
+                "
+              >
+                <li><a href="./Landing.dc.html">{{ t.nav.home }}</a></li>
+                <li><a href="../about/About.dc.html">{{ t.nav.about }}</a></li>
+                <li><a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a></li>
+              </ul>
+            </div>
+            <div style="height: 1px; background: var(--scheme-border)"></div>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 24px;
+                font-size: var(--text-small);
+                flex-wrap: wrap;
+                gap: 16px;
+              "
+            >
+              <p>{{ t.footer.copyright }}</p>
+              <ul
+                style="
+                  display: flex;
+                  gap: 24px;
+                  list-style: none;
+                  margin: 0;
+                  padding: 0;
+                "
+              >
+                <li>
+                  <a href="#" style="text-decoration: underline"
+                    >{{ t.footer.privacy }}</a
+                  >
+                </li>
+                <li>
+                  <a href="#" style="text-decoration: underline"
+                    >{{ t.footer.terms }}</a
+                  >
+                </li>
+                <li>
+                  <a href="#" style="text-decoration: underline"
+                    >{{ t.footer.cookies }}</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </x-dc>
+    <script type="text/x-dc" data-dc-script>
+      class Component extends DCLogic {
+        state = { lang: "en", menuOpen: false };
+
+        componentDidMount() {
+          try {
+            const l = localStorage.getItem("baheth-lang");
+            if (l === "ar" || l === "en") this.setState({ lang: l });
+          } catch (e) {}
+          this._onScroll = () => this._updateScales();
+          window.addEventListener("scroll", this._onScroll, { passive: true });
+          window.addEventListener("resize", this._onScroll);
+          this._updateScales();
+        }
+        componentDidUpdate() { this._updateScales(); }
+        componentWillUnmount() {
+          window.removeEventListener("scroll", this._onScroll);
+          window.removeEventListener("resize", this._onScroll);
+        }
+        _toggleLang() {
+          this.setState((s) => {
+            const lang = s.lang === "en" ? "ar" : "en";
+            try { localStorage.setItem("baheth-lang", lang); } catch (e) {}
+            return { lang };
+          });
+        }
+        _updateScales() { this._updateServices(); this._updateTestimonials(); }
+        _updateServices() {
+          const container = document.getElementById("bl-services-stack");
+          if (!container) return;
+          const cards = container.querySelectorAll(".bl-svc");
+          if (window.matchMedia("(max-width: 767px)").matches) {
+            cards.forEach((c) => { c.style.transform = ""; });
+            return;
+          }
+          const total = cards.length;
+          const rect = container.getBoundingClientRect();
+          const totalScroll = rect.height - window.innerHeight * 0.6;
+          let progress = totalScroll > 0 ? -rect.top / totalScroll : 0;
+          progress = Math.max(0, Math.min(1, progress));
+          cards.forEach((card, i) => {
+            if (i === total - 1) { card.style.transform = "scale(1)"; return; }
+            const frac = 1 / total;
+            let p = (progress - frac * i) / frac;
+            p = Math.max(0, Math.min(1, p));
+            card.style.transform = "scale(" + (1 - p * 0.2) + ")";
+          });
+        }
+        _updateTestimonials() {
+          const left = document.getElementById("bl-testi-left");
+          const right = document.getElementById("bl-testi-right");
+          if (!left || !right) return;
+          if (window.matchMedia("(max-width: 991px)").matches) {
+            left.style.transform = ""; right.style.transform = "";
+            return;
+          }
+          const section = left.closest("section");
+          const rect = section.getBoundingClientRect();
+          const span = rect.height + window.innerHeight;
+          let progress = (window.innerHeight - rect.top) / span;
+          progress = Math.max(0, Math.min(1, progress));
+          const range = 120;
+          const tt = (progress - 0.5) * 2;
+          left.style.transform = "translateY(" + (tt * range) + "px)";
+          right.style.transform = "translateY(" + (-tt * range) + "px)";
+        }
+
+        _dict() {
+          const en = {
+            nav: { home: "Home", about: "About us", blog: "Blog", login: "Login", start: "Start" },
+            hero: {
+              title: "Build your research career with purpose",
+              start: "Start", learn: "Learn more",
+              sub: "Baheth connects Saudi doctors with active research teams and provides the academic support you need to advance your career. Earn your SCFHS points through genuine collaboration, not shortcuts.",
+            },
+            path: {
+              eyebrow: "Pathways", h2: "Two ways to advance",
+              lead: "Choose the path that fits your research journey and career goals",
+              c1eyebrow: "Collaborate", c1title: "Join active research teams", c1body: "Become a co-author on established projects",
+              c2eyebrow: "Develop your own research", c2title: "Get guidance from start to publication", c2body: "From methodology to journal submission, we support every step",
+              explore: "Explore",
+            },
+            story: {
+              eyebrow: "Story", h2: "Baheth was built by doctors for doctors",
+              lead: "We started because we saw talented physicians held back by the gap between clinical work and research. We built a bridge. Now we help others cross it.",
+              learn: "Learn", about: "About",
+            },
+            stats: {
+              h3: "Numbers that speak to our commitment",
+              p: "Baheth has supported hundreds of Saudi doctors in advancing their research careers, connecting practitioners with meaningful publications and building the academic profiles that matter for promotions and program acceptance.",
+              l1: "Doctors supported", l2: "Papers published", l3: "Active research teams",
+            },
+            svcHead: { eyebrow: "Services", h2: "What we offer", lead: "Four core services to advance your research career" },
+            services: [
+              { eyebrow: "Analysis", title: "Statistical analysis using SPSS and R", body: "We handle the numbers so you can focus on the science. SPSS and R analysis run by statisticians who understand clinical data.", learn: "Learn", explore: "Explore", img: "../../assets/images/home-features-list-section-0.jpg" },
+              { eyebrow: "Writing", title: "Polish your work with feedback from experienced academics", body: "Detailed manuscript review from published Saudi researchers — structure, argument, and language, on your timeline.", learn: "Learn", explore: "Explore", img: "../../assets/images/home-features-list-section-1.jpg" },
+              { eyebrow: "Consultation", title: "One-on-one research consultations", body: "Personalized sessions with practicing Saudi consultants and academics to discuss methodology, research questions, and project planning.", learn: "Learn", explore: "Explore", img: "../../assets/images/services-feature-section.jpg" },
+              { eyebrow: "Publishing", title: "Research team matching for co-authorship", body: "Get matched with indexed-journal projects seeking collaborators in your specialty, then earn your place on the paper.", learn: "Learn", explore: "Explore", img: "../../assets/images/home-research-1.jpg" },
+            ],
+            oppsHead: { eyebrow: "Opportunities", h2: "Active research waiting for you", lead: "Browse current projects seeking co-authors and collaborators", view: "View project", viewAll: "View all" },
+            projects: [
+              { title: "Diabetes management in Saudi clinics", body: "Multi-center study examining treatment protocols and patient outcomes", tags: ["Clinical research", "Endocrinology"], img: "../../assets/images/home-research-0.jpg" },
+              { title: "Pediatric infection prevention", body: "Hospital-based observational study on infection control measures", tags: ["Hospital research", "Pediatrics"], img: "../../assets/images/home-research-1.jpg" },
+              { title: "Cardiac risk assessment", body: "Prospective cohort study evaluating cardiovascular risk factors in adults", tags: ["Prospective study", "Cardiology"], img: "../../assets/images/home-research-2.jpg" },
+            ],
+            testi: { h2: "Real voices", sub: "Doctors who found their way", explore: "Explore", connect: "Connect" },
+            voicesLeft: [
+              { quote: '"They understood exactly what SCFHS needed. No guessing, no wasted effort."', name: "Dr. Fatima Al-Otaibi", role: "Consultant, Pediatrics", initials: "FA" },
+              { quote: '"I had the research idea but not the time. Baheth handled the statistics and writing review. I earned my co-authorship."', name: "Dr. Mohammed Al-Harbi", role: "Fellow, Cardiology", initials: "MH" },
+              { quote: '"My research idea was solid but I had no idea how to get it published. They guided every step."', name: "Dr. Noor Al-Shammari", role: "Resident, Obstetrics", initials: "NS" },
+              { quote: '"The writing review feedback was specific and practical. My manuscript went from rough to ready."', name: "Dr. Khalid Al-Enezi", role: "Consultant, Gastroenterology", initials: "KE" },
+            ],
+            voicesRight: [
+              { quote: '"Baheth made it possible to publish while managing my residency. The support was real, not just templates."', name: "Dr. Ahmed Al-Rashid", role: "Resident, Internal Medicine", initials: "AR" },
+              { quote: '"The statistical analysis alone saved me months. I could focus on the clinical insight while they handled SPSS."', name: "Dr. Layla Al-Mutairi", role: "Fellow, Orthopedic Surgery", initials: "LM" },
+              { quote: '"I needed publications for my promotion, but research felt impossible during residency. Baheth made it real."', name: "Dr. Samir Al-Dosari", role: "Resident, Emergency Medicine", initials: "SD" },
+              { quote: '"They understand SCFHS requirements better than anyone. No wasted submissions to the wrong journals."', name: "Dr. Amira Al-Harbi", role: "Fellow, Rheumatology", initials: "AH" },
+              { quote: '"They matched me with a team doing work I actually cared about. The co-authorship felt earned, not given."', name: "Dr. Hassan Al-Qahtani", role: "Consultant, Neurology", initials: "HQ" },
+            ],
+            cta: { h2: "Ready to start your research?", lead: "Join Baheth today and take the first step toward your SCFHS points and career advancement.", signup: "Sign up", begin: "Begin" },
+            faqHead: { h2: "FAQ", lead: "Find answers to questions about joining research teams, earning co-authorship, and meeting SCFHS requirements.", more: "Have more questions?", q: "What makes Baheth different?", contact: "Contact" },
+            faqItems: [
+              { title: "How does co-authorship work?", content: "You join an active research team or develop your own project with our support. We provide statistical analysis, writing review, and publication guidance. Your name appears on the paper because you contributed genuine research work." },
+              { title: "Will this help my SCFHS points?", content: "Yes. Every publication in a Scopus or ISI indexed journal counts toward your SCFHS requirements. We understand the exact standards and timeline you're working within." },
+              { title: "What if I have no research experience?", content: "That's where we start. Our consultants guide you through methodology, statistical analysis, and manuscript preparation. You'll learn as you go, earning your co-authorship genuinely." },
+              { title: "How long does publication take?", content: "Timeline varies by journal and research complexity. We target indexed journals with reasonable review periods and help navigate the submission and revision process efficiently." },
+              { title: "Can I work while doing this?", content: "Absolutely. Most of our doctors are in residency or clinical practice. We structure support around your schedule, not the other way around." },
+            ],
+            footer: { copyright: "© 2025 Baheth. All rights reserved.", privacy: "Privacy policy", terms: "Terms of service", cookies: "Cookies settings" },
+          };
+          const ar = {
+            nav: { home: "الرئيسية", about: "من نحن", blog: "المدونة", login: "تسجيل الدخول", start: "ابدأ" },
+            hero: {
+              title: "مسارك العلمي الأوثق لتعزيز ملفك المهني والبحثي",
+              start: "ابدأ", learn: "اعرف المزيد",
+              sub: "بين ضغط المناوبات السريرية ومعايير الهيئة السعودية للتخصصات الصحية، تقف
+.."ابحث" كشريكك الأكاديمي الموثوق؛ ل تُم كّنك منهجي اً و تُج نّبك خطر مسارات النشر غير المعتمدة",
+            },
+            path: {
+              eyebrow: "المسارات", h2: "طريقتان للتقدّم",
+              lead: "اختر المسار الذي يناسب رحلتك البحثية وأهدافك المهنية",
+              c1eyebrow: "تعاون", c1title: "انضم إلى فرق بحثية نشطة", c1body: "كن مؤلفًا مشاركًا في مشاريع قائمة",
+              c2eyebrow: "طوّر بحثك الخاص", c2title: "احصل على التوجيه من البداية حتى النشر", c2body: "من المنهجية إلى تقديم البحث للمجلة، ندعمك في كل خطوة",
+              explore: "استكشف",
+            },
+            story: {
+              eyebrow: "قصتنا", h2: "بُني باحث بأيدي أطباء ولأجل الأطباء",
+              lead: "بدأنا لأننا رأينا أطباء موهوبين تعيقهم الفجوة بين العمل السريري والبحث. بنينا جسرًا، والآن نساعد غيرنا على عبوره.",
+              learn: "تعرّف", about: "عن باحث",
+            },
+            stats: {
+              h3: "أرقام تعبّر عن التزامنا",
+              p: "دعم باحث مئات الأطباء السعوديين في تطوير مسيرتهم البحثية، وربط الممارسين بأبحاث منشورة ذات قيمة، وبناء الملفات الأكاديمية المهمة للترقيات والقبول في البرامج.",
+              l1: "طبيب مدعوم", l2: "بحث منشور", l3: "فريق بحثي نشط",
+            },
+            svcHead: { eyebrow: "خدماتنا", h2: "ما نقدّمه", lead: "أربع خدمات أساسية لتطوير مسيرتك البحثية" },
+            services: [
+              { eyebrow: "التحليل", title: "التحليل الإحصائي باستخدام SPSS وR", body: "نتولّى الأرقام لتركّز أنت على العلم. تحليل عبر SPSS وR ينفّذه إحصائيون يفهمون البيانات السريرية.", learn: "تعرّف", explore: "استكشف", img: "../../assets/images/home-features-list-section-0.jpg" },
+              { eyebrow: "الكتابة", title: "صقل عملك بملاحظات من أكاديميين ذوي خبرة", body: "مراجعة تفصيلية للمخطوطة من باحثين سعوديين منشورين — البنية والحجة واللغة، وفق جدولك.", learn: "تعرّف", explore: "استكشف", img: "../../assets/images/home-features-list-section-1.jpg" },
+              { eyebrow: "الاستشارة", title: "استشارات بحثية فردية", body: "جلسات مخصّصة مع استشاريين وأكاديميين سعوديين ممارسين لمناقشة المنهجية وأسئلة البحث وتخطيط المشروع.", learn: "تعرّف", explore: "استكشف", img: "../../assets/images/services-feature-section.jpg" },
+              { eyebrow: "النشر", title: "مطابقة الفرق البحثية للتأليف المشترك", body: "احصل على مطابقة مع مشاريع في مجلات مفهرسة تبحث عن متعاونين في تخصصك، ثم استحق مكانك في البحث.", learn: "تعرّف", explore: "استكشف", img: "../../assets/images/home-research-1.jpg" },
+            ],
+            oppsHead: { eyebrow: "الفرص", h2: "أبحاث نشطة بانتظارك", lead: "تصفّح المشاريع الحالية التي تبحث عن مؤلفين ومتعاونين", view: "عرض المشروع", viewAll: "عرض الكل" },
+            projects: [
+              { title: "إدارة السكري في العيادات السعودية", body: "دراسة متعددة المراكز تبحث بروتوكولات العلاج ونتائج المرضى", tags: ["بحث سريري", "الغدد الصماء"], img: "../../assets/images/home-research-0.jpg" },
+              { title: "الوقاية من العدوى لدى الأطفال", body: "دراسة رصدية في المستشفى حول تدابير مكافحة العدوى", tags: ["بحث مستشفى", "طب الأطفال"], img: "../../assets/images/home-research-1.jpg" },
+              { title: "تقييم مخاطر القلب", body: "دراسة أترابية مستقبلية تقيّم عوامل خطر القلب والأوعية لدى البالغين", tags: ["دراسة مستقبلية", "طب القلب"], img: "../../assets/images/home-research-2.jpg" },
+            ],
+            testi: { h2: "أصوات حقيقية", sub: "أطباء وجدوا طريقهم", explore: "استكشف", connect: "تواصل" },
+            voicesLeft: [
+              { quote: '"فهموا تمامًا ما تطلبه الهيئة. لا تخمين ولا جهد ضائع."', name: "د. فاطمة العتيبي", role: "استشارية، طب الأطفال", initials: "FA" },
+              { quote: '"كانت لديّ فكرة البحث لكن لا وقت. تولّى باحث الإحصاء ومراجعة الكتابة، واستحققت تأليفي المشترك."', name: "د. محمد الحربي", role: "زميل، طب القلب", initials: "MH" },
+              { quote: '"كانت فكرتي متينة لكني لم أعرف كيف أنشرها. أرشدوني في كل خطوة."', name: "د. نور الشمري", role: "طبيبة مقيمة، النساء والولادة", initials: "NS" },
+              { quote: '"كانت ملاحظات مراجعة الكتابة محددة وعملية. تحوّلت مخطوطتي من مسودة إلى جاهزة."', name: "د. خالد العنزي", role: "استشاري، الجهاز الهضمي", initials: "KE" },
+            ],
+            voicesRight: [
+              { quote: '"جعل باحث النشر ممكنًا أثناء فترة إقامتي. كان الدعم حقيقيًا، لا مجرد قوالب."', name: "د. أحمد الرشيد", role: "طبيب مقيم، الباطنة", initials: "AR" },
+              { quote: '"وفّر عليّ التحليل الإحصائي وحده أشهرًا. ركّزت على الرؤية السريرية بينما تولّوا SPSS."', name: "د. ليلى المطيري", role: "زميلة، جراحة العظام", initials: "LM" },
+              { quote: '"احتجت أبحاثًا للترقية، لكن البحث بدا مستحيلًا أثناء الإقامة. حقّقه باحث."', name: "د. سامر الدوسري", role: "طبيب مقيم، طب الطوارئ", initials: "SD" },
+              { quote: '"يفهمون متطلبات الهيئة أفضل من الجميع. لا تقديمات ضائعة لمجلات خاطئة."', name: "د. أميرة الحربي", role: "زميلة، الروماتيزم", initials: "AH" },
+              { quote: '"طابقوني مع فريق يعمل على ما يهمني فعلًا. شعرت أن التأليف المشترك مُستحق لا ممنوح."', name: "د. حسن القحطاني", role: "استشاري، طب الأعصاب", initials: "HQ" },
+            ],
+            cta: { h2: "هل أنت مستعد لبدء بحثك؟", lead: "انضم إلى باحث اليوم واتخذ الخطوة الأولى نحو نقاط الهيئة وتقدّمك المهني.", signup: "سجّل الآن", begin: "ابدأ" },
+            faqHead: { h2: "الأسئلة الشائعة", lead: "اعثر على إجابات حول الانضمام إلى الفرق البحثية، والحصول على التأليف المشترك، واستيفاء متطلبات الهيئة.", more: "لديك المزيد من الأسئلة؟", q: "ما الذي يميّز باحث؟", contact: "تواصل معنا" },
+            faqItems: [
+              { title: "كيف يعمل التأليف المشترك؟", content: "تنضم إلى فريق بحثي نشط أو تطوّر مشروعك الخاص بدعمنا. نقدّم التحليل الإحصائي ومراجعة الكتابة وإرشاد النشر. يظهر اسمك في البحث لأنك قدّمت عملًا بحثيًا حقيقيًا." },
+              { title: "هل يساعد هذا في نقاط الهيئة؟", content: "نعم. كل بحث منشور في مجلة مفهرسة ضمن Scopus أو ISI يُحتسب ضمن متطلبات الهيئة. نفهم المعايير والجدول الزمني الذي تعمل ضمنه بدقة." },
+              { title: "ماذا لو لم تكن لديّ خبرة بحثية؟", content: "من هنا نبدأ. يرشدك استشاريونا عبر المنهجية والتحليل الإحصائي وإعداد المخطوطة. ستتعلّم أثناء العمل، وتستحق تأليفك المشترك بصدق." },
+              { title: "كم يستغرق النشر؟", content: "تختلف المدة حسب المجلة وتعقيد البحث. نستهدف مجلات مفهرسة بفترات مراجعة معقولة ونساعد في إدارة التقديم والتعديل بكفاءة." },
+              { title: "هل يمكنني العمل أثناء ذلك؟", content: "بالتأكيد. معظم أطبائنا في فترة الإقامة أو الممارسة السريرية. ننظّم الدعم حول جدولك، لا العكس." },
+            ],
+            footer: { copyright: "© 2025 باحث. جميع الحقوق محفوظة.", privacy: "سياسة الخصوصية", terms: "شروط الخدمة", cookies: "إعدادات الكوكيز" },
+          };
+          return { en, ar };
+        }
+
+        renderVals() {
+          const lang = this.state.lang;
+          const t = this._dict()[lang];
+          return {
+            lang,
+            dir: lang === "ar" ? "rtl" : "ltr",
+            langClass: lang === "ar" ? "lang-ar" : "",
+            langLabel: lang === "en" ? "العربية" : "English",
+            menuOpen: this.state.menuOpen,
+            menuIcon: this.state.menuOpen ? "x" : "menu",
+            toggleLang: () => this._toggleLang(),
+            toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+            faqOpen: [0],
+            t,
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+/* ============================================================
+   Baheth Design System — global stylesheet entry point.
+   Consumers link THIS one file. It only @imports token layers;
+   never add rules directly here.
+   ============================================================ */
+
+@import "tokens/fonts.css";
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";
+@import "tokens/radii.css";
+@import "tokens/base.css";
+@import "tokens/schemes.css";
+@import "components.css";

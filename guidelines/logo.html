@@ -1,0 +1,29 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Logo" subtitle="DNA-helix mark + BAHETH wordmark; flips to white on dark schemes" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 0; font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 200px; }
+  .cell { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; }
+  .cell img { width: 230px; height: auto; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .light { background: var(--color-white); }
+  .light .tag { color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="cell light">
+      <img src="../assets/logo/logo-light.png" alt="Baheth logo">
+      <span class="tag">On light · default</span>
+    </div>
+    <div class="cell scheme-1 logo-alt">
+      <img src="../assets/logo/logo-light.png" alt="Baheth logo">
+      <span class="tag">On dark · .logo-alt</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Accordion" subtitle="FAQ disclosure — rotating chevron, height-animated panel" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body { margin: 0; padding: 26px; background: var(--surface-page); font-family: var(--font-body); }
+  .wrap { max-width: 600px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Accordion } = window.BahethDesignSystem_c51e92;
+  const items = [
+    { title: "How does co-authorship work?", content: "You join an active research team or develop your own project with our support. Your name appears on the paper because you contributed genuine research work." },
+    { title: "Will this help my SCFHS points?", content: "Yes. Every publication in a Scopus or ISI indexed journal counts toward your SCFHS requirements." },
+    { title: "What if I have no research experience?", content: "That's where we start. Our consultants guide you through methodology, statistical analysis, and manuscript preparation." },
+  ];
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    <div className="wrap"><Accordion type="single" defaultOpen={[0]} items={items} /></div>
+  );
+</script>
+</body>
+</html>

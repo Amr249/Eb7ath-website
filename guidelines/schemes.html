@@ -1,0 +1,26 @@
+<!-- @dsCard group="Brand" viewport="700x150" name="Color schemes" subtitle="Five section schemes — apply one class, children recolor automatically" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .scheme { border-radius: 14px; border: 1px solid var(--border-subtle); padding: 16px; min-height: 96px; display: flex; flex-direction: column; justify-content: space-between; }
+  .scheme h4 { font-size: 20px; margin: 0 0 4px; }
+  .tag { font-size: 11px; opacity: 0.7; }
+  .pill { align-self: flex-start; margin-top: 10px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--scheme-border); color: var(--scheme-text); }
+  .cls { font-size: 10px; opacity: 0.6; margin-top: 8px; font-family: var(--font-body); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="scheme scheme-1"><div><h4>Aa</h4><div class="tag">Deepest green</div></div><div class="cls">.scheme-1</div></div>
+    <div class="scheme scheme-2"><div><h4>Aa</h4><div class="tag">Deep green</div></div><div class="cls">.scheme-2</div></div>
+    <div class="scheme scheme-3"><div><h4>Aa</h4><div class="tag">White</div></div><div class="cls">.scheme-3</div></div>
+    <div class="scheme scheme-4"><div><h4>Aa</h4><div class="tag">Neutral grey</div></div><div class="cls">.scheme-4</div></div>
+    <div class="scheme scheme-5"><div><h4>Aa</h4><div class="tag">Spindle blue</div></div><div class="cls">.scheme-5</div></div>
+  </div>
+</body>
+</html>

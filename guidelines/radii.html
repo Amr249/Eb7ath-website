@@ -1,0 +1,25 @@
+<!-- @dsCard group="Spacing" viewport="700x150" name="Radii & elevation" subtitle="Sleek corners: 12px controls, 16px cards; shadows only when floating" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-sunken); font-family: var(--font-body); display: flex; gap: 26px; align-items: center; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .box { width: 76px; height: 56px; background: var(--color-white); border: 1px solid var(--border-subtle); }
+  .lbl { font-size: 11px; font-weight: 600; color: var(--text-body); }
+  .tok { font-size: 10px; color: var(--text-muted); }
+  .sep { width: 1px; align-self: stretch; background: var(--border-subtle); }
+</style>
+</head>
+<body>
+  <div class="item"><div class="box" style="border-radius:6px"></div><div class="lbl">6px</div><div class="tok">tag</div></div>
+  <div class="item"><div class="box" style="border-radius:12px"></div><div class="lbl">12px</div><div class="tok">button · input · badge</div></div>
+  <div class="item"><div class="box" style="border-radius:16px"></div><div class="lbl">16px</div><div class="tok">card · image</div></div>
+  <div class="item"><div class="box" style="border-radius:999px;width:56px"></div><div class="lbl">full</div><div class="tok">avatar · pill</div></div>
+  <div class="sep"></div>
+  <div class="item"><div class="box" style="border-radius:16px;border-color:transparent;box-shadow:var(--shadow-md)"></div><div class="lbl">shadow-md</div><div class="tok">menus · dialogs</div></div>
+  <div class="item"><div class="box" style="border-radius:16px;border-color:transparent;box-shadow:var(--shadow-lg)"></div><div class="lbl">shadow-lg</div><div class="tok">overlays</div></div>
+</body>
+</html>

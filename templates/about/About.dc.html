@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Baheth About" description="Bilingual (EN/AR, RTL) Baheth About page: hero, foundation story, stats, why-choose-us expanding cards, CTA" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .lang-ar { --font-display: "Alexandria", sans-serif; --font-body: "Alexandria", sans-serif; }
+  .lang-ar h1, .lang-ar h2, .lang-ar h3, .lang-ar h4, .lang-ar h5, .lang-ar h6 { letter-spacing: 0; }
+  .ba-hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--scheme-border); background: var(--scheme-bg); }
+  .ba-hdr__bar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .ba-hdr__links { display: flex; align-items: center; gap: 4px; }
+  .ba-hdr__links a { padding: 8px 16px; color: var(--scheme-text); font-size: var(--text-medium); border-radius: var(--radius-button); }
+  .ba-hdr__links a:hover { opacity: 0.65; }
+  .ba-hdr__actions { display: flex; align-items: center; gap: 12px; }
+  .ba-lang { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--scheme-border); border-radius: var(--radius-button); background: transparent; font-family: var(--font-body); font-weight: 500; font-size: var(--text-small); color: var(--scheme-text); cursor: pointer; transition: background-color var(--duration-base) var(--ease-standard); }
+  .ba-lang:hover { background: var(--surface-sunken); }
+  .ba-hdr__cta { display: flex; align-items: center; gap: 12px; }
+  .ba-burger { display: none; background: transparent; border: 0; color: var(--scheme-text); padding: 6px; cursor: pointer; }
+  .ba-mobile { display: none; }
+  .ba-why { display: flex; gap: 32px; }
+  .ba-why__card { position: relative; overflow: hidden; width: 33.333%; min-height: 70vh; border-radius: var(--radius-card); transition: width 0.3s var(--ease-standard); display: flex; flex-direction: column; justify-content: flex-end; }
+  .ba-why:hover .ba-why__card { width: 23%; }
+  .ba-why__card:hover { width: 54% !important; }
+  .ba-why__card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .ba-why__scrim { position: absolute; inset: 0; background: rgba(4,7,8,0.5); z-index: 1; transition: background 0.3s var(--ease-standard); }
+  .ba-why__card:hover .ba-why__scrim { background: rgba(4,7,8,0.62); }
+  .ba-why__body { position: relative; z-index: 2; padding: 32px; }
+  .ba-why__more { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.3s var(--ease-standard), opacity 0.3s var(--ease-standard); }
+  .ba-why__card:hover .ba-why__more { max-height: 220px; opacity: 1; }
+  @media (max-width: 991px) {
+    .ba-hdr__links { display: none; }
+    .ba-hdr__cta { display: none; }
+    .ba-burger { display: inline-flex; }
+    .ba-mobile { display: flex; flex-direction: column; padding: 8px var(--page-gutter) 24px; gap: 2px; border-top: 1px solid var(--scheme-border); }
+    .ba-mobile a { padding: 12px 4px; color: var(--scheme-text); font-weight: 500; font-size: var(--text-large); }
+    .ba-mobile__cta { display: flex; gap: 12px; margin-top: 16px; }
+    .ba-found { grid-template-columns: 1fr !important; }
+    .ba-stats-head { grid-template-columns: 1fr !important; }
+    .ba-stats { grid-template-columns: 1fr 1fr !important; }
+    .ba-why { flex-direction: column; }
+    .ba-why__card, .ba-why:hover .ba-why__card, .ba-why__card:hover { width: 100% !important; min-height: 60vh; }
+    .ba-why__more { max-height: none !important; opacity: 1 !important; }
+  }
+  @media (max-width: 560px) {
+    .ba-stats { grid-template-columns: 1fr !important; }
+    .ba-found-sub { grid-template-columns: 1fr !important; }
+  }
+</style>
+</helmet>
+
+<main class="ba-root {{ langClass }}" dir="{{ dir }}" style="font-family: var(--font-body); color: var(--text-body);">
+
+  <!-- ===== Navbar ===== -->
+  <header class="ba-hdr scheme-3">
+    <div class="baheth-container ba-hdr__bar">
+      <a href="../landing/Landing.dc.html"><img src="../../assets/logo/logo-light.png" alt="Baheth" style="height: 30px; width: auto; display: block;"></a>
+      <nav class="ba-hdr__links">
+        <a href="../landing/Landing.dc.html">{{ t.nav.home }}</a>
+        <a href="./About.dc.html" style="font-weight:600;">{{ t.nav.about }}</a>
+        <a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a>
+      </nav>
+      <div class="ba-hdr__actions">
+        <button class="ba-lang" onClick="{{ toggleLang }}">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="globe" size="16" hint-size="16px,16px"></x-import>
+          {{ langLabel }}
+        </button>
+        <div class="ba-hdr__cta">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" size="sm" hint-size="72px,36px">{{ t.nav.start }}</x-import>
+        </div>
+        <button class="ba-burger" aria-label="Menu" onClick="{{ toggleMenu }}">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="{{ menuIcon }}" size="26" hint-size="26px,26px"></x-import>
+        </button>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="ba-mobile">
+        <a href="../landing/Landing.dc.html">{{ t.nav.home }}</a>
+        <a href="./About.dc.html" style="font-weight:600;">{{ t.nav.about }}</a>
+        <a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a>
+        <div class="ba-mobile__cta">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" size="sm" hint-size="72px,36px">{{ t.nav.start }}</x-import>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="scheme-1 logo-alt" style="padding-block: var(--section-py);">
+    <div class="baheth-container" style="max-width: 48rem; text-align: center;">
+      <p class="bh-eyebrow">{{ t.hero.eyebrow }}</p>
+      <h1 style="margin: 16px 0 20px;">{{ t.hero.h1 }}</h1>
+      <p style="font-size: var(--text-medium); color: var(--color-white-50);">{{ t.hero.sub }}</p>
+      <div style="margin-top: 28px; display: flex; justify-content: center; gap: 16px;">
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="alternate" hint-size="100px,44px">{{ t.hero.explore }}</x-import>
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="secondary" hint-size="130px,44px">{{ t.hero.learn }}</x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Foundation ===== -->
+  <section class="scheme-3" style="padding-block: var(--section-py);">
+    <div class="baheth-container">
+      <div class="ba-found" style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px;">
+        <img src="../../assets/images/home-about-section.jpg" alt="" style="width: 100%; border-radius: var(--radius-image); aspect-ratio: 4/3; object-fit: cover; display: block;">
+        <div>
+          <p class="bh-eyebrow">{{ t.found.eyebrow }}</p>
+          <h2 style="font-size: var(--text-h2); margin: 16px 0 24px;">{{ t.found.h2 }}</h2>
+          <p style="margin-bottom: 32px; color: var(--text-muted);">{{ t.found.body }}</p>
+          <div class="ba-found-sub" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+              <h6 style="font-size: var(--text-h6); margin-bottom: 12px;">{{ t.found.s1title }}</h6>
+              <p style="color: var(--text-muted);">{{ t.found.s1body }}</p>
+            </div>
+            <div>
+              <h6 style="font-size: var(--text-h6); margin-bottom: 12px;">{{ t.found.s2title }}</h6>
+              <p style="color: var(--text-muted);">{{ t.found.s2body }}</p>
+            </div>
+          </div>
+          <div style="margin-top: 32px; display: flex; align-items: center; gap: 16px;">
+            <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="secondary" hint-size="110px,44px">{{ t.found.discover }}</x-import>
+            <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="link" hint-size="110px,24px">{{ t.found.readMore }} <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="chevron-right" size="18" hint-size="18px,18px"></x-import></x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Stats ===== -->
+  <section class="scheme-4" style="padding-block: var(--section-py);">
+    <div class="baheth-container">
+      <div class="ba-stats-head" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 64px;">
+        <h3>{{ t.stats.h3 }}</h3>
+        <p>{{ t.stats.p }}</p>
+      </div>
+      <div class="ba-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 32px;">
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Card" hint-size="100%,300px" style="grid-row: span 2;">
+          <div style="padding:32px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; height:100%;">
+            <div style="font-family: var(--font-display); font-weight:500; font-size:5rem; line-height:1.1;">500+</div>
+            <h4>{{ t.stats.l1 }}</h4>
+          </div>
+        </x-import>
+        <div style="border-radius: var(--radius-image); overflow:hidden;"><img src="../../assets/images/home-stats-section-0.jpg" alt="" style="width:100%; height:100%; object-fit:cover; aspect-ratio:3/2; display:block;"></div>
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Card" hint-size="100%,160px">
+          <div style="padding:32px; text-align:center;">
+            <div style="font-family: var(--font-display); font-weight:500; font-size:4rem; line-height:1.1;">300+</div>
+            <h4>{{ t.stats.l2 }}</h4>
+          </div>
+        </x-import>
+        <div style="border-radius: var(--radius-image); overflow:hidden;"><img src="../../assets/images/home-stats-section-1.jpg" alt="" style="width:100%; height:100%; object-fit:cover; aspect-ratio:3/2; display:block;"></div>
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Card" hint-size="100%,160px">
+          <div style="padding:32px; text-align:center;">
+            <div style="font-family: var(--font-display); font-weight:500; font-size:4rem; line-height:1.1;">50+</div>
+            <h4>{{ t.stats.l3 }}</h4>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Why choose Baheth ===== -->
+  <section class="scheme-2 logo-alt" style="padding-block: var(--section-py);">
+    <div class="baheth-container">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 64px;">
+        <p class="bh-eyebrow">{{ t.why.eyebrow }}</p>
+        <h2 style="margin: 16px 0 20px;">{{ t.why.h2 }}</h2>
+        <p style="font-size: var(--text-large); color: var(--color-white-50);">{{ t.why.lead }}</p>
+      </div>
+      <div class="ba-why">
+        <sc-for list="{{ t.whyCards }}" as="c" hint-placeholder-count="3">
+          <div class="ba-why__card">
+            <img src="{{ c.img }}" alt="">
+            <div class="ba-why__scrim"></div>
+            <div class="ba-why__body">
+              <p style="font-weight: 600; color: var(--color-white); margin-bottom: 8px;">{{ c.eyebrow }}</p>
+              <h3 style="font-size: var(--text-h4); color: var(--color-white);">{{ c.title }}</h3>
+              <div class="ba-why__more">
+                <p style="color: var(--color-white); margin-top: 20px;">{{ c.body }}</p>
+                <div style="margin-top: 24px;">
+                  <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="link" hint-size="90px,24px"><span style="color: var(--color-white);">{{ c.learn }}</span> <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="chevron-right" size="18" hint-size="18px,18px"></x-import></x-import>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="scheme-1 logo-alt" style="position: relative; overflow: hidden; padding-block: var(--section-py);">
+    <img src="../../assets/images/about-cta-section.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+    <div style="position:absolute; inset:0; background: rgba(4,7,8,0.5); z-index:1;"></div>
+    <div class="baheth-container" style="position: relative; z-index: 2; max-width: 48rem; text-align: center;">
+      <h2 style="color: var(--color-white); margin-bottom: 20px;">{{ t.cta.h2 }}</h2>
+      <p style="font-size: var(--text-medium); color: var(--color-white);">{{ t.cta.lead }}</p>
+      <div style="margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;">
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="alternate" hint-size="110px,44px">{{ t.cta.join }}</x-import>
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="secondary" hint-size="100px,44px">{{ t.cta.begin }}</x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="scheme-3" style="padding-block: 80px; border-top: 1px solid var(--scheme-border);">
+    <div class="baheth-container">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:32px; padding-bottom:64px;">
+        <a href="../landing/Landing.dc.html"><img src="../../assets/logo/logo-light.png" alt="Baheth" style="height:32px; display:block;"></a>
+        <ul style="display:flex; gap:24px; list-style:none; margin:0; padding:0; font-weight:600; flex-wrap:wrap; justify-content:center;">
+          <li><a href="../landing/Landing.dc.html">{{ t.nav.home }}</a></li>
+          <li><a href="./About.dc.html">{{ t.nav.about }}</a></li>
+          <li><a href="../blog/Blog.dc.html">{{ t.nav.blog }}</a></li>
+        </ul>
+      </div>
+      <div style="height:1px; background: var(--scheme-border);"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:24px; font-size: var(--text-small); flex-wrap:wrap; gap:16px;">
+        <p>{{ t.footer.copyright }}</p>
+        <ul style="display:flex; gap:24px; list-style:none; margin:0; padding:0;">
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.privacy }}</a></li>
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.terms }}</a></li>
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.cookies }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { lang: "en", menuOpen: false };
+
+  componentDidMount() {
+    try {
+      const l = localStorage.getItem("baheth-lang");
+      if (l === "ar" || l === "en") this.setState({ lang: l });
+    } catch (e) {}
+  }
+  _toggleLang() {
+    this.setState((s) => {
+      const lang = s.lang === "en" ? "ar" : "en";
+      try { localStorage.setItem("baheth-lang", lang); } catch (e) {}
+      return { lang };
+    });
+  }
+
+  _dict() {
+    const en = {
+      nav: { home: "Home", about: "About us", blog: "Blog", login: "Login", start: "Start" },
+      hero: {
+        eyebrow: "About", h1: "Real research, real impact",
+        sub: "Baheth exists because Saudi doctors deserve better. No shortcuts, no predatory journals, no anonymous writers.",
+        explore: "Explore", learn: "Learn more",
+      },
+      found: {
+        eyebrow: "Foundation", h2: "Built for doctors, by doctors",
+        body: "We started Baheth because we understood the pressure. Residency programs demand research points. Promotions require publications. Career advancement feels impossible without the right support. We built this platform on a simple principle: empowerment, not replacement. You earn your co-authorship. You build your reputation. We provide the tools, guidance, and connections to make it happen.",
+        s1title: "The beginning", s1body: "We watched talented doctors struggle to advance because research felt impossible without shortcuts.",
+        s2title: "What we believe", s2body: "Your work matters. Your name on a publication should mean something real, earned through genuine contribution.",
+        discover: "Discover", readMore: "Read more",
+      },
+      stats: {
+        h3: "Numbers that speak to our commitment",
+        p: "Baheth has supported hundreds of Saudi doctors in advancing their research careers. Our platform connects practitioners with meaningful publications and builds the academic profiles that matter for promotions and program acceptance.",
+        l1: "Doctors supported", l2: "Papers published", l3: "Active research teams",
+      },
+      why: { eyebrow: "Advantage", h2: "Why doctors choose Baheth", lead: "We know what Saudi doctors face in their careers." },
+      whyCards: [
+        { eyebrow: "Expertise", title: "Guided by practicing Saudi consultants", body: "Your mentors understand SCFHS requirements intimately — they've earned the same points you're working toward.", learn: "Learn", img: "../../assets/images/home-research-0.jpg" },
+        { eyebrow: "Integrity", title: "Genuine co-authorship, never ghost-written", body: "You contribute real research work. Your name appears because you earned it — not because you paid for it.", learn: "Learn", img: "../../assets/images/services-feature-section.jpg" },
+        { eyebrow: "Indexed", title: "Published in Scopus and ISI journals", body: "Every publication counts toward your SCFHS requirements. We target the journals that matter for your promotion.", learn: "Learn", img: "../../assets/images/home-research-2.jpg" },
+      ],
+      cta: { h2: "Start your research journey", lead: "Connect with Baheth and build the academic profile your career demands.", join: "Join now", begin: "Begin" },
+      footer: { copyright: "© 2025 Baheth. All rights reserved.", privacy: "Privacy policy", terms: "Terms of service", cookies: "Cookies settings" },
+    };
+    const ar = {
+      nav: { home: "الرئيسية", about: "من نحن", blog: "المدونة", login: "تسجيل الدخول", start: "ابدأ" },
+      hero: {
+        eyebrow: "من نحن", h1: "بحث حقيقي، أثر حقيقي",
+        sub: "وُجد باحث لأن الأطباء السعوديين يستحقون الأفضل. لا اختصارات، ولا مجلات مفترسة، ولا كُتّاب مجهولون.",
+        explore: "استكشف", learn: "اعرف المزيد",
+      },
+      found: {
+        eyebrow: "الأساس", h2: "بُني للأطباء بأيدي أطباء",
+        body: "بدأنا باحث لأننا أدركنا الضغط. برامج الإقامة تتطلب نقاط بحث. الترقيات تتطلب أبحاثًا منشورة. ويبدو التقدّم المهني مستحيلًا دون الدعم المناسب. بنينا هذه المنصّة على مبدأ بسيط: التمكين لا الاستبدال. أنت تستحق تأليفك المشترك، وتبني سمعتك، ونحن نوفّر الأدوات والتوجيه والروابط لتحقيق ذلك.",
+        s1title: "البداية", s1body: "رأينا أطباء موهوبين يكافحون للتقدّم لأن البحث بدا مستحيلًا دون اختصارات.",
+        s2title: "ما نؤمن به", s2body: "عملك مهم. واسمك على بحث منشور يجب أن يعني شيئًا حقيقيًا، مكتسبًا عبر إسهام صادق.",
+        discover: "اكتشف", readMore: "اقرأ المزيد",
+      },
+      stats: {
+        h3: "أرقام تعبّر عن التزامنا",
+        p: "دعم باحث مئات الأطباء السعوديين في تطوير مسيرتهم البحثية. تربط منصّتنا الممارسين بأبحاث منشورة ذات قيمة، وتبني الملفات الأكاديمية المهمة للترقيات والقبول في البرامج.",
+        l1: "طبيب مدعوم", l2: "بحث منشور", l3: "فريق بحثي نشط",
+      },
+      why: { eyebrow: "الميزة", h2: "لماذا يختار الأطباء باحث", lead: "نعرف ما يواجهه الأطباء السعوديون في مسيرتهم." },
+      whyCards: [
+        { eyebrow: "الخبرة", title: "بإرشاد استشاريين سعوديين ممارسين", body: "يفهم مرشدوك متطلبات الهيئة عن قرب — فقد حصلوا على النقاط نفسها التي تسعى إليها.", learn: "تعرّف", img: "../../assets/images/home-research-0.jpg" },
+        { eyebrow: "النزاهة", title: "تأليف مشترك حقيقي، لا كتابة بالنيابة", body: "أنت تقدّم عملًا بحثيًا حقيقيًا. يظهر اسمك لأنك استحققته — لا لأنك دفعت مقابله.", learn: "تعرّف", img: "../../assets/images/services-feature-section.jpg" },
+        { eyebrow: "مفهرس", title: "منشور في مجلات Scopus وISI", body: "كل بحث يُحتسب ضمن متطلبات الهيئة. نستهدف المجلات التي تهمّ ترقيتك.", learn: "تعرّف", img: "../../assets/images/home-research-2.jpg" },
+      ],
+      cta: { h2: "ابدأ رحلتك البحثية", lead: "تواصل مع باحث وابنِ الملف الأكاديمي الذي تتطلبه مسيرتك.", join: "انضم الآن", begin: "ابدأ" },
+      footer: { copyright: "© 2025 باحث. جميع الحقوق محفوظة.", privacy: "سياسة الخصوصية", terms: "شروط الخدمة", cookies: "إعدادات الكوكيز" },
+    };
+    return { en, ar };
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this._dict()[lang];
+    return {
+      lang,
+      dir: lang === "ar" ? "rtl" : "ltr",
+      langClass: lang === "ar" ? "lang-ar" : "",
+      langLabel: lang === "en" ? "العربية" : "English",
+      menuOpen: this.state.menuOpen,
+      menuIcon: this.state.menuOpen ? "x" : "menu",
+      toggleLang: () => this._toggleLang(),
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      t,
+    };
+  }
+}
+</script>
+</body>
+</html>

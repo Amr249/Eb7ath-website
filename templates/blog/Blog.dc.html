@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Baheth Blog" description="Bilingual (EN/AR, RTL) Baheth Blog page: insights hero, category-filtered post grid, newsletter CTA" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .lang-ar { --font-display: "Alexandria", sans-serif; --font-body: "Alexandria", sans-serif; }
+  .lang-ar h1, .lang-ar h2, .lang-ar h3, .lang-ar h4, .lang-ar h5, .lang-ar h6 { letter-spacing: 0; }
+  .bb-hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--scheme-border); background: var(--scheme-bg); }
+  .bb-hdr__bar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .bb-hdr__links { display: flex; align-items: center; gap: 4px; }
+  .bb-hdr__links a { padding: 8px 16px; color: var(--scheme-text); font-size: var(--text-medium); border-radius: var(--radius-button); }
+  .bb-hdr__links a:hover { opacity: 0.65; }
+  .bb-hdr__actions { display: flex; align-items: center; gap: 12px; }
+  .bb-lang { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--scheme-border); border-radius: var(--radius-button); background: transparent; font-family: var(--font-body); font-weight: 500; font-size: var(--text-small); color: var(--scheme-text); cursor: pointer; transition: background-color var(--duration-base) var(--ease-standard); }
+  .bb-lang:hover { background: var(--surface-sunken); }
+  .bb-hdr__cta { display: flex; align-items: center; gap: 12px; }
+  .bb-burger { display: none; background: transparent; border: 0; color: var(--scheme-text); padding: 6px; cursor: pointer; }
+  .bb-mobile { display: none; }
+  .bb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .bb-card__img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .bb-card__body { padding: 24px; }
+  .bb-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 991px) {
+    .bb-hdr__links { display: none; }
+    .bb-hdr__cta { display: none; }
+    .bb-burger { display: inline-flex; }
+    .bb-mobile { display: flex; flex-direction: column; padding: 8px var(--page-gutter) 24px; gap: 2px; border-top: 1px solid var(--scheme-border); }
+    .bb-mobile a { padding: 12px 4px; color: var(--scheme-text); font-weight: 500; font-size: var(--text-large); }
+    .bb-mobile__cta { display: flex; gap: 12px; margin-top: 16px; }
+    .bb-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</helmet>
+
+<main class="bb-root {{ langClass }}" dir="{{ dir }}" style="font-family: var(--font-body); color: var(--text-body);">
+
+  <!-- ===== Navbar ===== -->
+  <header class="bb-hdr scheme-3">
+    <div class="baheth-container bb-hdr__bar">
+      <a href="../landing/Landing.dc.html"><img src="../../assets/logo/logo-light.png" alt="Baheth" style="height: 30px; width: auto; display: block;"></a>
+      <nav class="bb-hdr__links">
+        <a href="../landing/Landing.dc.html">{{ t.nav.home }}</a>
+        <a href="../about/About.dc.html">{{ t.nav.about }}</a>
+        <a href="./Blog.dc.html" style="font-weight:600;">{{ t.nav.blog }}</a>
+      </nav>
+      <div class="bb-hdr__actions">
+        <button class="bb-lang" onClick="{{ toggleLang }}">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="globe" size="16" hint-size="16px,16px"></x-import>
+          {{ langLabel }}
+        </button>
+        <div class="bb-hdr__cta">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" size="sm" hint-size="72px,36px">{{ t.nav.start }}</x-import>
+        </div>
+        <button class="bb-burger" aria-label="Menu" onClick="{{ toggleMenu }}">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="{{ menuIcon }}" size="26" hint-size="26px,26px"></x-import>
+        </button>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div class="bb-mobile">
+        <a href="../landing/Landing.dc.html">{{ t.nav.home }}</a>
+        <a href="../about/About.dc.html">{{ t.nav.about }}</a>
+        <a href="./Blog.dc.html" style="font-weight:600;">{{ t.nav.blog }}</a>
+        <div class="bb-mobile__cta">
+          <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" size="sm" hint-size="72px,36px">{{ t.nav.start }}</x-import>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="scheme-1 logo-alt" style="padding-block: var(--section-py);">
+    <div class="baheth-container" style="max-width: 48rem; text-align: center;">
+      <p class="bh-eyebrow">{{ t.hero.eyebrow }}</p>
+      <h1 style="margin: 16px 0 20px;">{{ t.hero.h1 }}</h1>
+      <p style="font-size: var(--text-medium); color: var(--color-white-50);">{{ t.hero.sub }}</p>
+      <div style="margin-top: 28px; display: flex; justify-content: center; gap: 16px;">
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="alternate" hint-size="90px,44px">{{ t.hero.read }}</x-import>
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="secondary" hint-size="120px,44px">{{ t.hero.subscribe }}</x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Featured posts ===== -->
+  <section class="scheme-3" style="padding-block: var(--section-py);">
+    <div class="baheth-container">
+      <div style="text-align: center; max-width: 48rem; margin: 0 auto 48px;">
+        <p class="bh-eyebrow">{{ t.feat.eyebrow }}</p>
+        <h2 style="margin: 16px 0 20px;">{{ t.feat.h2 }}</h2>
+        <p style="font-size: var(--text-large); color: var(--text-muted);">{{ t.feat.lead }}</p>
+      </div>
+      <div style="display: flex; justify-content: center; margin-bottom: 56px;">
+        <x-import component-from-global-scope="BahethDesignSystem_c51e92.Tabs" tabs="{{ tabs }}" value="{{ activeTab }}" on-change="{{ setTab }}" hint-size="420px,44px"></x-import>
+      </div>
+      <div class="bb-grid">
+        <sc-for list="{{ visiblePosts }}" as="post" hint-placeholder-count="4">
+          <div class="bh-card">
+            <img class="bb-card__img" src="{{ post.img }}" alt="">
+            <div class="bb-card__body">
+              <div class="bb-meta">
+                <x-import component-from-global-scope="BahethDesignSystem_c51e92.Badge" hint-size="90px,28px">{{ post.category }}</x-import>
+                <span style="font-size: var(--text-small); font-weight: 600;">{{ post.read }}</span>
+              </div>
+              <h3 style="font-size: var(--text-h5); margin-bottom: 8px;">{{ post.title }}</h3>
+              <p style="color: var(--text-muted);">{{ post.excerpt }}</p>
+              <div style="margin-top: 20px;">
+                <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" variant="link" hint-size="110px,24px">{{ t.feat.readMore }} <x-import component-from-global-scope="BahethDesignSystem_c51e92.Icon" name="chevron-right" size="18" hint-size="18px,18px"></x-import></x-import>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <p style="text-align:center; color: var(--text-muted); padding: 48px 0;">{{ t.feat.empty }}</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ===== Newsletter CTA ===== -->
+  <section class="scheme-5" style="padding-block: var(--section-py);">
+    <div class="baheth-container" style="display: flex; flex-direction: column; align-items: center;">
+      <div style="text-align: center; max-width: 32rem; margin: 0 auto 48px;">
+        <h2 style="margin-bottom: 20px;">{{ t.news.h2 }}</h2>
+        <p style="font-size: var(--text-medium);">{{ t.news.lead }}</p>
+        <div style="max-width: 24rem; margin: 24px auto 0;">
+          <div style="display: flex; gap: 12px; align-items: flex-end;">
+            <x-import component-from-global-scope="BahethDesignSystem_c51e92.Input" type="email" placeholder="{{ t.news.placeholder }}" hint-size="100%,44px"></x-import>
+            <x-import component-from-global-scope="BahethDesignSystem_c51e92.Button" hint-size="90px,44px">{{ t.news.join }}</x-import>
+          </div>
+          <p style="font-size: var(--text-tiny); color: var(--scheme-muted); margin-top: 12px;">{{ t.news.note }}</p>
+        </div>
+      </div>
+      <img src="../../assets/images/blog-newsletter-section.jpg" alt="" style="width: 100%; border-radius: var(--radius-image); aspect-ratio: 16/6; object-fit: cover; display: block;">
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="scheme-3" style="padding-block: 80px; border-top: 1px solid var(--scheme-border);">
+    <div class="baheth-container">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:32px; padding-bottom:64px;">
+        <a href="../landing/Landing.dc.html"><img src="../../assets/logo/logo-light.png" alt="Baheth" style="height:32px; display:block;"></a>
+        <ul style="display:flex; gap:24px; list-style:none; margin:0; padding:0; font-weight:600; flex-wrap:wrap; justify-content:center;">
+          <li><a href="../landing/Landing.dc.html">{{ t.nav.home }}</a></li>
+          <li><a href="../about/About.dc.html">{{ t.nav.about }}</a></li>
+          <li><a href="./Blog.dc.html">{{ t.nav.blog }}</a></li>
+        </ul>
+      </div>
+      <div style="height:1px; background: var(--scheme-border);"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:24px; font-size: var(--text-small); flex-wrap:wrap; gap:16px;">
+        <p>{{ t.footer.copyright }}</p>
+        <ul style="display:flex; gap:24px; list-style:none; margin:0; padding:0;">
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.privacy }}</a></li>
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.terms }}</a></li>
+          <li><a href="#" style="text-decoration:underline;">{{ t.footer.cookies }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { lang: "en", menuOpen: false, tab: "all" };
+
+  componentDidMount() {
+    try {
+      const l = localStorage.getItem("baheth-lang");
+      if (l === "ar" || l === "en") this.setState({ lang: l });
+    } catch (e) {}
+  }
+  _toggleLang() {
+    this.setState((s) => {
+      const lang = s.lang === "en" ? "ar" : "en";
+      try { localStorage.setItem("baheth-lang", lang); } catch (e) {}
+      return { lang };
+    });
+  }
+
+  _dict() {
+    const en = {
+      nav: { home: "Home", about: "About us", blog: "Blog", login: "Login", start: "Start" },
+      hero: { eyebrow: "Insights", h1: "Research and advancement", sub: "Discover strategies, case studies, and guidance for building your academic profile.", read: "Read", subscribe: "Subscribe" },
+      feat: { eyebrow: "Featured", h2: "What matters now", lead: "Essential reading for your research journey", readMore: "Read more", empty: "No posts in this category yet — check back soon." },
+      news: { h2: "Stay informed", lead: "Get new insights delivered to your inbox each week.", placeholder: "Enter email", join: "Join us", note: "We respect your inbox and won't send spam." },
+      tabs: [
+        { value: "all", label: "All posts" },
+        { value: "publishing", label: "Publishing" },
+        { value: "research", label: "Research" },
+        { value: "career", label: "Career" },
+        { value: "statistics", label: "Statistics" },
+      ],
+      posts: [
+        { cat: "publishing", category: "Publishing", read: "8 min read", title: "Getting your work into indexed journals", excerpt: "Learn the practical steps to navigate peer review and secure publication in reputable journals.", img: "../../assets/images/home-research-0.jpg" },
+        { cat: "research", category: "Research", read: "6 min read", title: "Building your research profile as a resident", excerpt: "Strategic approaches to accumulating research points while managing clinical responsibilities.", img: "../../assets/images/home-research-1.jpg" },
+        { cat: "career", category: "Career", read: "7 min read", title: "SCFHS requirements and your academic future", excerpt: "Understanding the standards that shape your path to advancement in Saudi medicine.", img: "../../assets/images/home-research-2.jpg" },
+        { cat: "publishing", category: "Publishing", read: "9 min read", title: "Peer review strategies that strengthen your manuscript", excerpt: "Master the revision process and address reviewer feedback with confidence.", img: "../../assets/images/home-features-list-section-0.jpg" },
+        { cat: "statistics", category: "Statistics", read: "5 min read", title: "Choosing the right statistical test for your study", excerpt: "A plain-language guide to matching your research question with the correct analysis in SPSS and R.", img: "../../assets/images/home-features-list-section-1.jpg" },
+        { cat: "research", category: "Research", read: "8 min read", title: "Designing a prospective cohort study", excerpt: "From defining your population to managing follow-up — the building blocks of robust observational research.", img: "../../assets/images/home-stats-section-0.jpg" },
+      ],
+      footer: { copyright: "© 2025 Baheth. All rights reserved.", privacy: "Privacy policy", terms: "Terms of service", cookies: "Cookies settings" },
+    };
+    const ar = {
+      nav: { home: "الرئيسية", about: "من نحن", blog: "المدونة", login: "تسجيل الدخول", start: "ابدأ" },
+      hero: { eyebrow: "رؤى", h1: "البحث والتقدّم", sub: "اكتشف الاستراتيجيات ودراسات الحالة والإرشادات لبناء ملفك الأكاديمي.", read: "اقرأ", subscribe: "اشترك" },
+      feat: { eyebrow: "مميّز", h2: "ما يهمّ الآن", lead: "قراءات أساسية لرحلتك البحثية", readMore: "اقرأ المزيد", empty: "لا توجد مقالات في هذا التصنيف بعد — عُد قريبًا." },
+      news: { h2: "ابقَ على اطلاع", lead: "احصل على رؤى جديدة في بريدك كل أسبوع.", placeholder: "أدخل بريدك", join: "انضم إلينا", note: "نحترم بريدك ولن نرسل رسائل مزعجة." },
+      tabs: [
+        { value: "all", label: "كل المقالات" },
+        { value: "publishing", label: "النشر" },
+        { value: "research", label: "البحث" },
+        { value: "career", label: "المسار المهني" },
+        { value: "statistics", label: "الإحصاء" },
+      ],
+      posts: [
+        { cat: "publishing", category: "النشر", read: "٨ دقائق قراءة", title: "كيف تُدرج عملك في المجلات المفهرسة", excerpt: "تعلّم الخطوات العملية لاجتياز مراجعة الأقران وتأمين النشر في مجلات موثوقة.", img: "../../assets/images/home-research-0.jpg" },
+        { cat: "research", category: "البحث", read: "٦ دقائق قراءة", title: "بناء ملفك البحثي خلال فترة الإقامة", excerpt: "أساليب استراتيجية لجمع نقاط البحث مع إدارة المسؤوليات السريرية.", img: "../../assets/images/home-research-1.jpg" },
+        { cat: "career", category: "المسار المهني", read: "٧ دقائق قراءة", title: "متطلبات الهيئة ومستقبلك الأكاديمي", excerpt: "فهم المعايير التي تشكّل طريقك نحو التقدّم في الطب السعودي.", img: "../../assets/images/home-research-2.jpg" },
+        { cat: "publishing", category: "النشر", read: "٩ دقائق قراءة", title: "استراتيجيات مراجعة الأقران التي تقوّي مخطوطتك", excerpt: "أتقن عملية التعديل وتعامل مع ملاحظات المحكّمين بثقة.", img: "../../assets/images/home-features-list-section-0.jpg" },
+        { cat: "statistics", category: "الإحصاء", read: "٥ دقائق قراءة", title: "اختيار الاختبار الإحصائي المناسب لدراستك", excerpt: "دليل ميسّر لمطابقة سؤال بحثك بالتحليل الصحيح في SPSS وR.", img: "../../assets/images/home-features-list-section-1.jpg" },
+        { cat: "research", category: "البحث", read: "٨ دقائق قراءة", title: "تصميم دراسة أترابية مستقبلية", excerpt: "من تحديد المجتمع إلى إدارة المتابعة — لبنات البحث الرصدي المتين.", img: "../../assets/images/home-stats-section-0.jpg" },
+      ],
+      footer: { copyright: "© 2025 باحث. جميع الحقوق محفوظة.", privacy: "سياسة الخصوصية", terms: "شروط الخدمة", cookies: "إعدادات الكوكيز" },
+    };
+    return { en, ar };
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this._dict()[lang];
+    const tab = this.state.tab;
+    const visible = tab === "all" ? t.posts : t.posts.filter((p) => p.cat === tab);
+    return {
+      lang,
+      dir: lang === "ar" ? "rtl" : "ltr",
+      langClass: lang === "ar" ? "lang-ar" : "",
+      langLabel: lang === "en" ? "العربية" : "English",
+      menuOpen: this.state.menuOpen,
+      menuIcon: this.state.menuOpen ? "x" : "menu",
+      toggleLang: () => this._toggleLang(),
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      tabs: t.tabs,
+      activeTab: tab,
+      setTab: (v) => this.setState({ tab: v }),
+      visiblePosts: visible,
+      isEmpty: visible.length === 0,
+      t,
+    };
+  }
+}
+</script>
+</body>
+</html>

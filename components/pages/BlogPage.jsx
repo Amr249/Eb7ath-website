@@ -9,18 +9,20 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { blogDict } from "@/lib/i18n/blog";
+import { BlogCardsSkeleton } from "@/components/blog/BlogCardsSkeleton";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, scaleIn, motion, fadeUp } from "@/lib/motion";
 
 export function BlogPage() {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = blogDict(lang);
-  const { posts: cmsPosts } = useCmsBlogPosts(lang);
+  const { posts: cmsPosts, loading } = useCmsBlogPosts(lang);
 
   const sourcePosts = useMemo(() => {
+    if (loading) return [];
     if (cmsPosts.length) return cmsPosts;
     return t.posts;
-  }, [cmsPosts, t.posts]);
+  }, [cmsPosts, loading, t.posts]);
 
   if (!mounted) return null;
 
@@ -47,26 +49,30 @@ export function BlogPage() {
             <h2 style={{ margin: "16px 0 20px" }}>{t.feat.h2}</h2>
             <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.feat.lead}</p>
           </Reveal>
-          <RevealGroup className="bb-grid">
-            {sourcePosts.map((post, i) => (
-              <motion.div key={post.slug || i} className="bh-card" variants={fadeUp} whileHover={{ y: -6 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
-                <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
-                  <img className="bb-card__img" src={post.img} alt="" />
-                  <div className="bb-card__body">
-                    <div className="bb-meta">
-                      <span className="bb-meta__read">{post.read}</span>
+          {loading ? (
+            <BlogCardsSkeleton count={4} className="bb-grid" />
+          ) : (
+            <RevealGroup className="bb-grid">
+              {sourcePosts.map((post, i) => (
+                <motion.div key={post.slug || i} className="bh-card" variants={fadeUp} whileHover={{ y: -6 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
+                  <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
+                    <img className="bb-card__img" src={post.img} alt="" />
+                    <div className="bb-card__body">
+                      <div className="bb-meta">
+                        <span className="bb-meta__read">{post.read}</span>
+                      </div>
+                      <h3 className="bb-card__title">{post.title}</h3>
+                      <p className="bb-card__excerpt">{post.excerpt}</p>
+                      <div style={{ marginTop: 20 }}>
+                        <Button variant="primary" size="sm">{t.feat.readMore}</Button>
+                      </div>
                     </div>
-                    <h3 className="bb-card__title">{post.title}</h3>
-                    <p className="bb-card__excerpt">{post.excerpt}</p>
-                    <div style={{ marginTop: 20 }}>
-                      <Button variant="primary" size="sm">{t.feat.readMore}</Button>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </RevealGroup>
-          {sourcePosts.length === 0 && (
+                  </Link>
+                </motion.div>
+              ))}
+            </RevealGroup>
+          )}
+          {!loading && sourcePosts.length === 0 && (
             <p style={{ textAlign: "center", color: "var(--text-muted)", padding: "48px 0" }}>{t.feat.empty}</p>
           )}
         </div>

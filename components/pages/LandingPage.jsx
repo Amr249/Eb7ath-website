@@ -13,6 +13,7 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
+import { BlogCardsSkeleton } from "@/components/blog/BlogCardsSkeleton";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
 import { CountUp } from "@/lib/CountUp";
@@ -60,14 +61,15 @@ function TestimonialColumn({ voices, direction = "up" }) {
 export function LandingPage() {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = landingDict(lang);
-  const { posts: cmsPosts } = useCmsBlogPosts(lang, { limit: 3 });
+  const { posts: cmsPosts, loading: blogLoading } = useCmsBlogPosts(lang, { limit: 3 });
   const blogCards = useMemo(() => {
+    if (blogLoading) return [];
     if (cmsPosts.length) {
       const readMore = t.blogHome.readMore;
       return cmsPosts.map((post) => ({ ...post, readMore }));
     }
     return t.blogCards;
-  }, [cmsPosts, t.blogCards, t.blogHome.readMore]);
+  }, [cmsPosts, blogLoading, t.blogCards, t.blogHome.readMore]);
   const allVoices = useMemo(() => [...t.voicesLeft, ...t.voicesRight], [t.voicesLeft, t.voicesRight]);
   const stackRef = useRef(null);
   const heroImages = [IMAGES.homeHero2, IMAGES.homeHero3, IMAGES.homeHero4];
@@ -352,25 +354,29 @@ export function LandingPage() {
               <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.blogHome.lead}</p>
             </RevealItem>
           </RevealGroup>
-          <RevealGroup className="bl-blog-grid">
-            {blogCards.map((post, i) => (
-              <RevealItem key={post.slug || i} variants={fadeUp}>
-                <Card>
-                  <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
-                    <img className="bb-card__img" src={post.img} alt="" />
-                    <div className="bb-card__body">
-                      <div className="bb-meta">
-                        <span className="bb-meta__read">{post.read}</span>
+          {blogLoading ? (
+            <BlogCardsSkeleton count={3} className="bl-blog-grid" />
+          ) : (
+            <RevealGroup className="bl-blog-grid">
+              {blogCards.map((post, i) => (
+                <RevealItem key={post.slug || i} variants={fadeUp}>
+                  <Card>
+                    <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
+                      <img className="bb-card__img" src={post.img} alt="" />
+                      <div className="bb-card__body">
+                        <div className="bb-meta">
+                          <span className="bb-meta__read">{post.read}</span>
+                        </div>
+                        <h3 className="bb-card__title">{post.title}</h3>
+                        <p className="bb-card__excerpt">{post.excerpt}</p>
+                        <span className="bh-btn bh-btn--primary bh-btn--sm">{post.readMore}</span>
                       </div>
-                      <h3 className="bb-card__title">{post.title}</h3>
-                      <p className="bb-card__excerpt">{post.excerpt}</p>
-                      <span className="bh-btn bh-btn--primary bh-btn--sm">{post.readMore}</span>
-                    </div>
-                  </Link>
-                </Card>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+                    </Link>
+                  </Card>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          )}
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
             <Link href="/blog">
               <Button variant="primary" size="sm">{t.blogHome.cta}</Button>

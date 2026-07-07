@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/buttons/Button.jsx";
+import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
 import { Icon } from "@/components/icon/Icon.jsx";
 import { RevealGroup, RevealItem } from "@/lib/motion";
 
@@ -44,7 +45,9 @@ export function StepsSection({ t, locale = "en" }) {
             </RevealItem>
             <RevealItem hover={false}>
               <div className="bl-steps__cta">
-                <Button variant="primary">{t.steps.cta}</Button>
+                <Button variant="primary" asChild>
+                  <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.steps.cta}</a>
+                </Button>
               </div>
             </RevealItem>
           </RevealGroup>

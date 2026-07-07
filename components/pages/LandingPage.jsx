@@ -13,6 +13,7 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
+import { RESEARCH_TEAM_FORM_URL, WHATSAPP_URL } from "@/lib/externalLinks";
 import { BlogCardsSkeleton } from "@/components/blog/BlogCardsSkeleton";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
@@ -152,8 +153,12 @@ export function LandingPage() {
           <HeroStagger>
             <motion.h1 variants={fadeUp} style={{ color: "var(--color-white)", marginBottom: 28 }}>{t.hero.title}</motion.h1>
             <motion.div variants={fadeUp} style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <Button variant="alternate">{t.hero.start}</Button>
-              <Button variant="secondary">{t.hero.learn}</Button>
+              <Button variant="alternate" asChild>
+                <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.hero.start}</a>
+              </Button>
+              <Button variant="secondary" asChild>
+                <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.hero.learn}</a>
+              </Button>
             </motion.div>
           </HeroStagger>
           <HeroEnter as="p" delay={0.25} className="bl-hero-grid__sub" style={{ color: "var(--color-white)", maxWidth: "44ch" }}>{t.hero.sub}</HeroEnter>
@@ -269,8 +274,12 @@ export function LandingPage() {
                         <h2 style={{ fontSize: "var(--text-h3)", margin: "12px 0 16px" }}>{s.title}</h2>
                         <p style={{ color: "var(--text-muted)" }}>{s.body}</p>
                         <div style={{ marginTop: 24, display: "flex", gap: 16, alignItems: "center" }}>
-                          <Button variant="secondary">{s.learn}</Button>
-                          <Button variant="primary" size="sm">{s.explore}</Button>
+                          <Button variant="secondary" asChild>
+                            <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{s.learn}</a>
+                          </Button>
+                          <Button variant="primary" size="sm" asChild>
+                            <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{s.explore}</a>
+                          </Button>
                         </div>
                       </motion.div>
                       <motion.img
@@ -418,7 +427,9 @@ export function LandingPage() {
         <Reveal className="bl-cta__content" variants={scaleIn}>
           <h2 className="bl-cta__title">{t.cta.h2}</h2>
           <p className="bl-cta__lead">{t.cta.lead}</p>
-          <Button variant="alternate">{t.cta.signup}</Button>
+          <Button variant="alternate" asChild>
+            <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.cta.signup}</a>
+          </Button>
         </Reveal>
       </section>
 
@@ -433,7 +444,9 @@ export function LandingPage() {
           </Reveal>
           <Reveal style={{ textAlign: "center", marginTop: 64 }}>
             <h4 style={{ marginBottom: 24 }}>{t.faqHead.more}</h4>
-            <Button variant="secondary">{t.faqHead.contact}</Button>
+            <Button variant="secondary" asChild>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{t.faqHead.contact}</a>
+            </Button>
           </Reveal>
         </div>
       </section>

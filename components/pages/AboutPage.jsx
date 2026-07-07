@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site/SiteHeader.jsx";
 import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { aboutDict } from "@/lib/i18n/about";
+import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, motion, fadeUp } from "@/lib/motion";
 
@@ -104,7 +105,9 @@ export function AboutPage() {
         <Reveal className="bl-cta__content" variants={scaleIn}>
           <h2 className="bl-cta__title">{t.cta.h2}</h2>
           <p className="bl-cta__lead">{t.cta.lead}</p>
-          <Button variant="alternate">{t.cta.btn}</Button>
+          <Button variant="alternate" asChild>
+            <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.cta.btn}</a>
+          </Button>
         </Reveal>
       </section>
 

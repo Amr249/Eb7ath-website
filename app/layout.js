@@ -1,5 +1,6 @@
 import "../styles.css";
 import "./site-styles.css";
+import "./admin/globals.css";
 import "lenis/dist/lenis.css";
 import { IMAGES } from "@/lib/assets";
 import { SmoothScroll } from "@/components/site/SmoothScroll.jsx";

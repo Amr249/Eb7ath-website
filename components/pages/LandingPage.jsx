@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/buttons/Button.jsx";
 import { Icon } from "@/components/icon/Icon.jsx";
 import { Card } from "@/components/display/Card.jsx";
@@ -10,6 +11,7 @@ import { Accordion } from "@/components/feedback/Accordion.jsx";
 import { SiteHeader } from "@/components/site/SiteHeader.jsx";
 import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
+import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
@@ -58,9 +60,17 @@ function TestimonialColumn({ voices, direction = "up" }) {
 export function LandingPage() {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = landingDict(lang);
+  const { posts: cmsPosts } = useCmsBlogPosts(lang, { limit: 3 });
+  const blogCards = useMemo(() => {
+    if (cmsPosts.length) {
+      const readMore = t.blogHome.readMore;
+      return cmsPosts.map((post) => ({ ...post, readMore }));
+    }
+    return t.blogCards;
+  }, [cmsPosts, t.blogCards, t.blogHome.readMore]);
   const allVoices = useMemo(() => [...t.voicesLeft, ...t.voicesRight], [t.voicesLeft, t.voicesRight]);
   const stackRef = useRef(null);
-  const heroImages = [IMAGES.homeHero, IMAGES.homeHero2, IMAGES.homeHero3];
+  const heroImages = [IMAGES.homeHero2, IMAGES.homeHero3, IMAGES.homeHero4];
   const [heroIndex, setHeroIndex] = useState(0);
 
   useEffect(() => {
@@ -203,9 +213,6 @@ export function LandingPage() {
                   <div style={{ padding: 32 }}>
                     <h3 className="bl-path-card__title">{t.path.c1title}</h3>
                     <p className="bl-path-card__body">{t.path.c1body}</p>
-                    <div style={{ marginTop: 20 }}>
-                      <Button variant="alternate" size="sm">{t.path.c1cta}</Button>
-                    </div>
                   </div>
                   <img src={IMAGES.homeFeatures0} alt="" style={{ marginTop: "auto", width: "100%", aspectRatio: "3/2", objectFit: "cover", display: "block" }} />
                 </div>
@@ -217,9 +224,6 @@ export function LandingPage() {
                   <div className="bl-path-card__split-text">
                     <h3 className="bl-path-card__title bl-path-card__title--sm">{t.path.c2title}</h3>
                     <p className="bl-path-card__body">{t.path.c2body}</p>
-                    <div style={{ marginTop: 20 }}>
-                      <Button variant="alternate" size="sm">{t.path.c2cta}</Button>
-                    </div>
                   </div>
                   <img src={IMAGES.homeFeatures1} alt="" className="bl-path-card__split-img" />
                 </div>
@@ -240,9 +244,11 @@ export function LandingPage() {
             <RevealItem hover={false}>
               <h2 style={{ margin: "16px 0 20px" }}>{t.svcHead.h2}</h2>
             </RevealItem>
-            <RevealItem hover={false}>
-              <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.svcHead.lead}</p>
-            </RevealItem>
+            {t.svcHead.lead ? (
+              <RevealItem hover={false}>
+                <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.svcHead.lead}</p>
+              </RevealItem>
+            ) : null}
           </RevealGroup>
           <div id="bl-services-stack" ref={stackRef} style={{ position: "relative" }}>
             {t.services.map((s, i) => (
@@ -329,6 +335,46 @@ export function LandingPage() {
           </RevealGroup>
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
             <Button variant="primary" size="sm">{t.oppsHead.viewAll}</Button>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="scheme-3" style={{ paddingBlock: "var(--section-py)" }}>
+        <div className="baheth-container">
+          <RevealGroup style={{ textAlign: "center", maxWidth: "48rem", margin: "0 auto 64px" }}>
+            <RevealItem hover={false}>
+              <p className="bh-eyebrow">{t.blogHome.eyebrow}</p>
+            </RevealItem>
+            <RevealItem hover={false}>
+              <h2 style={{ margin: "16px 0 20px" }}>{t.blogHome.h2}</h2>
+            </RevealItem>
+            <RevealItem hover={false}>
+              <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.blogHome.lead}</p>
+            </RevealItem>
+          </RevealGroup>
+          <RevealGroup className="bl-blog-grid">
+            {blogCards.map((post, i) => (
+              <RevealItem key={post.slug || i} variants={fadeUp}>
+                <Card>
+                  <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
+                    <img className="bb-card__img" src={post.img} alt="" />
+                    <div className="bb-card__body">
+                      <div className="bb-meta">
+                        <span className="bb-meta__read">{post.read}</span>
+                      </div>
+                      <h3 className="bb-card__title">{post.title}</h3>
+                      <p className="bb-card__excerpt">{post.excerpt}</p>
+                      <span className="bh-btn bh-btn--primary bh-btn--sm">{post.readMore}</span>
+                    </div>
+                  </Link>
+                </Card>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
+            <Link href="/blog">
+              <Button variant="primary" size="sm">{t.blogHome.cta}</Button>
+            </Link>
           </Reveal>
         </div>
       </section>

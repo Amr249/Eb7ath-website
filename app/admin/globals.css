@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #admin-root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+    font-family: "Alexandria", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  #admin-root *,
+  #admin-root *::before,
+  #admin-root *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  #admin-root .cms-editor {
+    @apply overflow-hidden rounded-md border border-input bg-background;
+  }
+
+  #admin-root .cms-editor--loading {
+    @apply flex min-h-[280px] items-center justify-center text-sm text-muted-foreground;
+  }
+
+  #admin-root .cms-editor__toolbar {
+    @apply flex flex-wrap items-center gap-1 border-b border-input bg-muted/40 p-2;
+  }
+
+  #admin-root .cms-editor__divider {
+    @apply mx-1 h-6 w-px bg-border;
+  }
+
+  #admin-root .cms-editor__surface {
+    @apply min-h-[280px];
+  }
+
+  #admin-root .cms-editor--page .cms-editor__surface,
+  #admin-root .cms-editor--page .cms-editor__content {
+    @apply min-h-[420px];
+  }
+
+  #admin-root .cms-editor__content {
+    @apply min-h-[280px] px-4 py-3 text-sm leading-7 outline-none;
+  }
+
+  #admin-root .cms-editor__content p.is-editor-empty:first-child::before,
+  #admin-root .ProseMirror p.is-editor-empty:first-child::before {
+    @apply pointer-events-none float-right h-0 text-muted-foreground;
+    content: attr(data-placeholder);
+  }
+
+  #admin-root .cms-editor__content h1 {
+    @apply mb-4 mt-2 text-2xl font-semibold leading-tight;
+  }
+
+  #admin-root .cms-editor__content h2 {
+    @apply mb-3 mt-2 text-xl font-semibold leading-snug;
+  }
+
+  #admin-root .cms-editor__content h3 {
+    @apply mb-2 mt-2 text-lg font-semibold leading-snug;
+  }
+
+  #admin-root .cms-editor__content p {
+    @apply mb-3;
+  }
+
+  #admin-root .cms-editor__content ul,
+  #admin-root .cms-editor__content ol {
+    @apply mb-3 mr-6 list-outside space-y-1;
+  }
+
+  #admin-root .cms-editor__content ul {
+    @apply list-disc;
+  }
+
+  #admin-root .cms-editor__content ol {
+    @apply list-decimal;
+  }
+}

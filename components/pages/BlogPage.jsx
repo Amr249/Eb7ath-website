@@ -1,24 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
+import Link from "next/link";
 import { Button } from "@/components/buttons/Button.jsx";
-import { Icon } from "@/components/icon/Icon.jsx";
-import { Badge } from "@/components/display/Badge.jsx";
 import { Input } from "@/components/forms/Input.jsx";
-import { Tabs } from "@/components/navigation/Tabs.jsx";
 import { SiteHeader } from "@/components/site/SiteHeader.jsx";
 import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
+import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { blogDict } from "@/lib/i18n/blog";
 import { IMAGES } from "@/lib/assets";
-import { Reveal, RevealGroup, RevealItem, scaleIn, motion, fadeUp } from "@/lib/motion";
+import { Reveal, RevealGroup, scaleIn, motion, fadeUp } from "@/lib/motion";
 
 export function BlogPage() {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = blogDict(lang);
-  const [tab, setTab] = useState("all");
+  const { posts: cmsPosts } = useCmsBlogPosts(lang);
 
-  const visiblePosts = tab === "all" ? t.posts : t.posts.filter((p) => p.cat === tab);
+  const sourcePosts = useMemo(() => {
+    if (cmsPosts.length) return cmsPosts;
+    return t.posts;
+  }, [cmsPosts, t.posts]);
 
   if (!mounted) return null;
 
@@ -45,28 +47,26 @@ export function BlogPage() {
             <h2 style={{ margin: "16px 0 20px" }}>{t.feat.h2}</h2>
             <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.feat.lead}</p>
           </Reveal>
-          <Reveal style={{ display: "flex", justifyContent: "center", marginBottom: 56 }}>
-            <Tabs tabs={t.tabs} value={tab} onChange={setTab} />
-          </Reveal>
-          <RevealGroup key={tab} className="bb-grid">
-            {visiblePosts.map((post, i) => (
-              <motion.div key={i} className="bh-card" variants={fadeUp} whileHover={{ y: -6 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
-                <img className="bb-card__img" src={post.img} alt="" />
-                <div className="bb-card__body">
-                  <div className="bb-meta">
-                    <Badge>{post.category}</Badge>
-                    <span style={{ fontSize: "var(--text-small)", fontWeight: 600 }}>{post.read}</span>
+          <RevealGroup className="bb-grid">
+            {sourcePosts.map((post, i) => (
+              <motion.div key={post.slug || i} className="bh-card" variants={fadeUp} whileHover={{ y: -6 }} transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}>
+                <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
+                  <img className="bb-card__img" src={post.img} alt="" />
+                  <div className="bb-card__body">
+                    <div className="bb-meta">
+                      <span className="bb-meta__read">{post.read}</span>
+                    </div>
+                    <h3 className="bb-card__title">{post.title}</h3>
+                    <p className="bb-card__excerpt">{post.excerpt}</p>
+                    <div style={{ marginTop: 20 }}>
+                      <Button variant="primary" size="sm">{t.feat.readMore}</Button>
+                    </div>
                   </div>
-                  <h3 style={{ fontSize: "var(--text-h5)", marginBottom: 8 }}>{post.title}</h3>
-                  <p style={{ color: "var(--text-muted)" }}>{post.excerpt}</p>
-                  <div style={{ marginTop: 20 }}>
-                    <Button variant="link">{t.feat.readMore} <Icon name="chevron-right" size={18} /></Button>
-                  </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </RevealGroup>
-          {visiblePosts.length === 0 && (
+          {sourcePosts.length === 0 && (
             <p style={{ textAlign: "center", color: "var(--text-muted)", padding: "48px 0" }}>{t.feat.empty}</p>
           )}
         </div>

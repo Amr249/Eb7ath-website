@@ -71,7 +71,9 @@ export function AboutPage() {
           <Reveal style={{ textAlign: "center", maxWidth: "48rem", margin: "0 auto 64px" }}>
             <p className="bh-eyebrow">{t.why.eyebrow}</p>
             <h2 style={{ margin: "16px 0 20px" }}>{t.why.h2}</h2>
-            <p style={{ fontSize: "var(--text-large)", color: "var(--color-white-50)" }}>{t.why.lead}</p>
+            {t.why.lead ? (
+              <p style={{ fontSize: "var(--text-large)", color: "var(--color-white-50)" }}>{t.why.lead}</p>
+            ) : null}
           </Reveal>
           <RevealGroup className="ba-why">
             {t.whyCards.map((c, i) => (

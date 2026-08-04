@@ -31,7 +31,13 @@ export function Accordion({ items = [], type = "single", defaultOpen = [], class
             </button>
             <div className="bh-accordion__panel">
               <div>
-                <div className="bh-accordion__content">{item.content}</div>
+                <div className="bh-accordion__content">
+                  {item.rich && typeof item.content === "string" ? (
+                    <div className="bh-accordion__rich" dangerouslySetInnerHTML={{ __html: item.content }} />
+                  ) : (
+                    item.content
+                  )}
+                </div>
               </div>
             </div>
           </div>

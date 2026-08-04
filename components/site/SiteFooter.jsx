@@ -27,6 +27,7 @@ export function SiteFooter({ footer, locale = "ar" }) {
             <li><Link href="/">{footer.nav?.home ?? "Home"}</Link></li>
             <li><Link href="/about">{footer.nav?.about ?? "About us"}</Link></li>
             <li><Link href="/blog">{footer.nav?.blog ?? "Blog"}</Link></li>
+            <li><Link href="/faq">{footer.nav?.faq ?? "FAQ"}</Link></li>
           </ul>
         </div>
         <div style={{ height: 1, background: "var(--scheme-border)" }} />

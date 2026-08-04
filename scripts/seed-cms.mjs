@@ -4,7 +4,7 @@ import { createArticle } from "../lib/cms/blogRepository.js";
 await createArticle({
   readMinutes: 6,
   status: "published",
-  coverImageUrl: "/assets/images/Research-consultations-img.avif",
+  coverImageUrl: "/assets/images/Research-consultations-img.png",
   locales: {
     ar: {
       title: "مقالة تجريبية",

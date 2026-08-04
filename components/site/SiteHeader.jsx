@@ -10,6 +10,7 @@ const PREFIXES = {
   landing: "bl",
   about: "ba",
   blog: "bb",
+  faq: "bb",
 };
 
 export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggleLang }) {
@@ -44,6 +45,7 @@ export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggl
           <Link href="/" style={linkStyle("home")}>{lang.nav.home}</Link>
           <Link href="/about" style={linkStyle("about")}>{lang.nav.about}</Link>
           <Link href="/blog" style={linkStyle("blog")}>{lang.nav.blog}</Link>
+          <Link href="/faq" style={linkStyle("faq")}>{lang.nav.faq}</Link>
         </nav>
         <div className={`${p}-hdr__actions`}>
           <button type="button" className={`${p}-lang`} onClick={toggleLang}>
@@ -68,6 +70,7 @@ export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggl
           <Link href="/" style={linkStyle("home")} onClick={() => setMenuOpen(false)}>{lang.nav.home}</Link>
           <Link href="/about" style={linkStyle("about")} onClick={() => setMenuOpen(false)}>{lang.nav.about}</Link>
           <Link href="/blog" style={linkStyle("blog")} onClick={() => setMenuOpen(false)}>{lang.nav.blog}</Link>
+          <Link href="/faq" style={linkStyle("faq")} onClick={() => setMenuOpen(false)}>{lang.nav.faq}</Link>
           <div className={`${p}-mobile__cta`}>
             <Button size="sm">{lang.nav.start}</Button>
           </div>

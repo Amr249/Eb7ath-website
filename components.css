@@ -218,6 +218,37 @@
 .bh-accordion__item[data-open="true"] .bh-accordion__panel { grid-template-rows: 1fr; }
 .bh-accordion__panel > div { overflow: hidden; }
 .bh-accordion__content { padding-bottom: 1.25rem; color: var(--scheme-muted, var(--text-muted)); }
+.bf-faq { max-width: 52rem; }
+.bf-faq .bh-accordion__trigger {
+  font-size: var(--text-large);
+  font-weight: 600;
+  text-align: start;
+  line-height: 1.45;
+}
+.bh-accordion__rich {
+  font-size: var(--text-medium);
+  line-height: 1.85;
+  color: var(--text-body);
+}
+.bh-accordion__rich p { margin: 0 0 16px; color: var(--text-muted); }
+.bh-accordion__rich h4 {
+  margin: 24px 0 12px;
+  font-size: var(--text-h6);
+  font-weight: 600;
+  color: var(--text-body);
+  line-height: 1.4;
+}
+.bh-accordion__rich h4:first-child { margin-top: 8px; }
+.bh-accordion__rich ul,
+.bh-accordion__rich ol {
+  margin: 0 0 16px;
+  padding-inline-start: 1.4rem;
+  color: var(--text-muted);
+}
+.bh-accordion__rich ul { list-style: disc; }
+.bh-accordion__rich ol { list-style: decimal; }
+.bh-accordion__rich li { margin-bottom: 8px; }
+.bh-accordion__rich strong { font-weight: 700; color: var(--text-body); }
 
 /* ---------------------------------------------------------------
    Tabs — pill segmented control

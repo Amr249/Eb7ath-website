@@ -13,7 +13,7 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
-import { RESEARCH_TEAM_FORM_URL, WHATSAPP_URL } from "@/lib/externalLinks";
+import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
 import { BlogCardsSkeleton } from "@/components/blog/BlogCardsSkeleton";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
@@ -445,7 +445,7 @@ export function LandingPage() {
           <Reveal style={{ textAlign: "center", marginTop: 64 }}>
             <h4 style={{ marginBottom: 24 }}>{t.faqHead.more}</h4>
             <Button variant="secondary" asChild>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{t.faqHead.contact}</a>
+              <Link href="/faq">{t.faqHead.contact}</Link>
             </Button>
           </Reveal>
         </div>

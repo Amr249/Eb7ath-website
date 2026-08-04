@@ -21,9 +21,16 @@ export async function PATCH(request, { params }) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const ok = await updateArticle(id, parsed.data);
-  if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  return NextResponse.json({ ok: true });
+  try {
+    const ok = await updateArticle(id, parsed.data);
+    if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    if (error?.message === "SCHEDULED_AT_REQUIRED") {
+      return NextResponse.json({ error: "Scheduled date/time is required" }, { status: 400 });
+    }
+    throw error;
+  }
 }
 
 export async function DELETE(_request, { params }) {

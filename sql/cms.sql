@@ -56,4 +56,7 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 
 CREATE INDEX IF NOT EXISTS idx_articles_status ON articles(status);
 CREATE INDEX IF NOT EXISTS idx_articles_published_at ON articles(published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_articles_scheduled
+  ON articles(status, published_at)
+  WHERE status = 'scheduled';
 CREATE INDEX IF NOT EXISTS idx_article_localizations_locale ON article_localizations(locale);

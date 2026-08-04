@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { CoverImageUpload } from "@/components/admin/CoverImageUpload";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
-import { emptyArticleForm, toArticlePayload } from "@/lib/cms/articleForm";
+import { articleToForm, emptyArticleForm, toArticlePayload } from "@/lib/cms/articleForm";
 
 export function ArticleEditor({ articleId }) {
   const router = useRouter();
@@ -39,17 +39,7 @@ export function ArticleEditor({ articleId }) {
       .then((res) => (res.ok ? res.json() : Promise.reject()))
       .then((data) => {
         if (!active) return;
-        const ar = data.item?.locales?.ar || {};
-        setForm({
-          id: data.item.id,
-          slug: data.item.slug || "",
-          coverImageUrl: data.item.coverImageUrl || "",
-          readMinutes: data.item.readMinutes || 5,
-          status: data.item.status || "draft",
-          title: ar.title || "",
-          excerpt: ar.excerpt || "",
-          content: ar.content || "",
-        });
+        setForm(articleToForm(data.item));
       })
       .catch(() => {
         if (active) setError("تعذر تحميل المقال.");
@@ -67,6 +57,12 @@ export function ArticleEditor({ articleId }) {
     event.preventDefault();
     setLoading(true);
     setError("");
+
+    if (form.status === "scheduled" && !form.scheduledAt) {
+      setLoading(false);
+      setError("يرجى اختيار تاريخ ووقت الجدولة.");
+      return;
+    }
 
     const body = JSON.stringify(toArticlePayload(form));
     const url = editing ? `/api/admin/articles/${form.id}` : "/api/admin/articles";
@@ -137,7 +133,7 @@ export function ArticleEditor({ articleId }) {
             <Card>
               <CardHeader>
                 <CardTitle>بيانات المقال</CardTitle>
-                <CardDescription>يمكنك تعديل المحتوى بحرية باستخدام أدوات التنسيق.</CardDescription>
+                <CardDescription>يمكنك جدولة النشر بتاريخ ووقت محددين ليظهر المقال تلقائياً في الموقع.</CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-6" onSubmit={save}>
@@ -164,16 +160,34 @@ export function ArticleEditor({ articleId }) {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="status">الحالة</Label>
-                    <Select
-                      id="status"
-                      value={form.status}
-                      onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}
-                    >
-                      <option value="draft">مسودة</option>
-                      <option value="published">منشور</option>
-                    </Select>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="status">الحالة</Label>
+                      <Select
+                        id="status"
+                        value={form.status}
+                        onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}
+                      >
+                        <option value="draft">مسودة</option>
+                        <option value="scheduled">مجدول للنشر</option>
+                        <option value="published">منشور الآن</option>
+                      </Select>
+                    </div>
+                    {form.status === "scheduled" ? (
+                      <div className="space-y-2">
+                        <Label htmlFor="scheduledAt">تاريخ ووقت النشر</Label>
+                        <Input
+                          id="scheduledAt"
+                          type="datetime-local"
+                          value={form.scheduledAt}
+                          onChange={(e) => setForm((p) => ({ ...p, scheduledAt: e.target.value }))}
+                          required
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          سيظهر المقال في الموقع تلقائياً في هذا الموعد (حسب توقيت جهازك).
+                        </p>
+                      </div>
+                    ) : null}
                   </div>
 
                   <CoverImageUpload

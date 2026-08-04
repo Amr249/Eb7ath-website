@@ -18,6 +18,13 @@ export async function POST(request) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const id = await createArticle(parsed.data);
-  return NextResponse.json({ ok: true, id });
+  try {
+    const id = await createArticle(parsed.data);
+    return NextResponse.json({ ok: true, id });
+  } catch (error) {
+    if (error?.message === "SCHEDULED_AT_REQUIRED") {
+      return NextResponse.json({ error: "Scheduled date/time is required" }, { status: 400 });
+    }
+    throw error;
+  }
 }

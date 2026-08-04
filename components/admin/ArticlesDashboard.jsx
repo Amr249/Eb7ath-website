@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { statusLabels, statusVariant } from "@/lib/cms/articleForm";
+import { formatScheduleLabel, statusLabels, statusVariant } from "@/lib/cms/articleForm";
 
 export function ArticlesDashboard() {
   const [items, setItems] = useState([]);
@@ -15,10 +15,12 @@ export function ArticlesDashboard() {
 
   const stats = useMemo(() => {
     const published = items.filter((item) => item.status === "published").length;
+    const scheduled = items.filter((item) => item.status === "scheduled").length;
     return {
       total: items.length,
       published,
-      drafts: items.length - published,
+      scheduled,
+      drafts: items.filter((item) => item.status === "draft").length,
     };
   }, [items]);
 
@@ -51,7 +53,7 @@ export function ArticlesDashboard() {
         <div className="flex h-16 items-center justify-between px-6">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">المقالات</h1>
-            <p className="text-sm text-muted-foreground">إدارة مقالات المدونة باللغة العربية</p>
+            <p className="text-sm text-muted-foreground">إدارة مقالات المدونة وجدولة نشرها</p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={loadArticles} disabled={refreshing}>
@@ -69,7 +71,7 @@ export function ArticlesDashboard() {
       </header>
 
       <main className="flex-1 space-y-6 p-6">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-4">
           <Card>
             <CardHeader className="pb-2">
               <CardDescription>إجمالي المقالات</CardDescription>
@@ -84,6 +86,12 @@ export function ArticlesDashboard() {
           </Card>
           <Card>
             <CardHeader className="pb-2">
+              <CardDescription>المجدولة</CardDescription>
+              <CardTitle className="text-3xl text-sky-600">{stats.scheduled}</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
               <CardDescription>المسودات</CardDescription>
               <CardTitle className="text-3xl text-amber-600">{stats.drafts}</CardTitle>
             </CardHeader>
@@ -93,7 +101,7 @@ export function ArticlesDashboard() {
         <Card>
           <CardHeader>
             <CardTitle>كل المقالات</CardTitle>
-            <CardDescription>عدّل المقالات أو انشرها أو احذفها.</CardDescription>
+            <CardDescription>أنشئ مقالاتك وحدد موعد ظهور كل منها في الموقع.</CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
@@ -101,13 +109,14 @@ export function ArticlesDashboard() {
                 <TableRow>
                   <TableHead>العنوان</TableHead>
                   <TableHead>الحالة</TableHead>
+                  <TableHead>موعد النشر</TableHead>
                   <TableHead className="text-start">الإجراءات</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {items.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={3} className="py-10 text-center text-muted-foreground">
+                    <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
                       لا توجد مقالات بعد.{" "}
                       <Link href="/admin/articles/new" className="font-medium text-foreground underline-offset-4 hover:underline">
                         أنشئ أول مقال
@@ -125,13 +134,18 @@ export function ArticlesDashboard() {
                         <Badge variant={statusVariant(item.status)}>{statusLabels[item.status] || item.status}</Badge>
                       </TableCell>
                       <TableCell>
+                        <span className="text-sm text-muted-foreground">
+                          {item.publishedAt ? formatScheduleLabel(item.publishedAt) : "—"}
+                        </span>
+                      </TableCell>
+                      <TableCell>
                         <div className="flex flex-wrap gap-2">
                           <Button variant="outline" size="sm" asChild>
                             <Link href={`/admin/articles/${item.id}/edit`}>تعديل</Link>
                           </Button>
                           {item.status !== "published" ? (
                             <Button variant="secondary" size="sm" onClick={() => publish(item.id)}>
-                              نشر
+                              نشر الآن
                             </Button>
                           ) : null}
                           <Button variant="destructive" size="sm" onClick={() => remove(item.id)}>

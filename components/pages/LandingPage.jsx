@@ -15,7 +15,7 @@ import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
 import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
 import { IMAGES } from "@/lib/assets";
-import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp, staggerContainer } from "@/lib/motion";
+import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
 import { CountUp } from "@/lib/CountUp";
 import { StepsSection } from "@/components/sections/StepsSection.jsx";
 
@@ -380,14 +380,9 @@ export function LandingPage({ initialPostsByLocale }) {
               <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.blogHome.lead}</p>
             </RevealItem>
           </RevealGroup>
-          <motion.div
-            className="bl-blog-grid"
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="bl-blog-grid">
             {blogCards.map((post, i) => (
-              <motion.div key={post.slug || i} variants={fadeUp}>
+              <div key={post.slug || i}>
                 <Card>
                   <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
                     <img className="bb-card__img" src={post.img} alt="" loading="lazy" decoding="async" />
@@ -401,9 +396,9 @@ export function LandingPage({ initialPostsByLocale }) {
                     </div>
                   </Link>
                 </Card>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
             <Link href="/blog">
               <Button variant="primary" size="sm">{t.blogHome.cta}</Button>

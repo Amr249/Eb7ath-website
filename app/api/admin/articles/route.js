@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { articleInputSchema } from "@/lib/cms/validators";
 import { createArticle, listArticlesAdmin } from "@/lib/cms/blogRepository";
+import { revalidateBlogCache } from "@/lib/cms/revalidateBlog";
 import { requireAdmin } from "@/lib/cms/routeAuth";
 
 export async function GET(request) {
@@ -20,6 +21,7 @@ export async function POST(request) {
   }
   try {
     const id = await createArticle(parsed.data);
+    revalidateBlogCache();
     return NextResponse.json({ ok: true, id });
   } catch (error) {
     if (error?.message === "SCHEDULED_AT_REQUIRED") {

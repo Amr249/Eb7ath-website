@@ -9,7 +9,6 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { blogDict, getStaticBlogPost } from "@/lib/i18n/blog";
 import { prepareArticleHtml } from "@/lib/cms/content";
-import { Reveal } from "@/lib/motion";
 
 function formatDate(value, lang) {
   if (!value) return "";
@@ -24,17 +23,20 @@ function formatDate(value, lang) {
   }
 }
 
-export function BlogPostPage({ slug }) {
-  const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
+export function BlogPostPage({ slug, initialArticlesByLocale }) {
+  const { lang, dir, langClass, langLabel, toggleLang } = useLanguage();
   const t = blogDict(lang);
-  const [article, setArticle] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const serverArticle = initialArticlesByLocale?.[lang] ?? null;
+  const [article, setArticle] = useState(serverArticle);
+  const [loading, setLoading] = useState(!serverArticle);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    let active = true;
-    setLoading(true);
+    setArticle(serverArticle);
+    setLoading(!serverArticle);
     setNotFound(false);
+
+    let active = true;
 
     fetch(`/api/public/blog/${slug}?locale=${lang}`)
       .then((res) => (res.ok ? res.json() : null))
@@ -43,7 +45,7 @@ export function BlogPostPage({ slug }) {
         if (data?.item) {
           setArticle(data.item);
           setNotFound(false);
-        } else {
+        } else if (!serverArticle) {
           const fallback = getStaticBlogPost(lang, slug);
           setArticle(fallback);
           setNotFound(!fallback);
@@ -51,9 +53,11 @@ export function BlogPostPage({ slug }) {
       })
       .catch(() => {
         if (!active) return;
-        const fallback = getStaticBlogPost(lang, slug);
-        setArticle(fallback);
-        setNotFound(!fallback);
+        if (!serverArticle) {
+          const fallback = getStaticBlogPost(lang, slug);
+          setArticle(fallback);
+          setNotFound(!fallback);
+        }
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -62,14 +66,12 @@ export function BlogPostPage({ slug }) {
     return () => {
       active = false;
     };
-  }, [slug, lang]);
+  }, [slug, lang, serverArticle]);
 
   const articleHtml = useMemo(
     () => (article?.content ? prepareArticleHtml(article.content) : ""),
     [article?.content]
   );
-
-  if (!mounted) return null;
 
   return (
     <main key={`${lang}-${slug}`} className={`bb-root ${langClass}`} dir={dir} style={{ fontFamily: "var(--font-body)", color: "var(--text-body)" }}>
@@ -77,12 +79,10 @@ export function BlogPostPage({ slug }) {
 
       <section className="scheme-3" style={{ paddingBlock: "var(--section-py)" }}>
         <div className="baheth-container bb-post">
-          <Reveal>
-            <Link href="/blog" className="bb-post__back">
-              <Icon name="chevron-right" size={18} />
-              {t.post.back}
-            </Link>
-          </Reveal>
+          <Link href="/blog" className="bb-post__back">
+            <Icon name="chevron-right" size={18} />
+            {t.post.back}
+          </Link>
 
           {loading ? (
             <p className="bb-post__state">{lang === "ar" ? "جارٍ تحميل المقال..." : "Loading article..."}</p>
@@ -97,9 +97,9 @@ export function BlogPostPage({ slug }) {
             </div>
           ) : (
             <>
-              <Reveal className="bb-post__hero">
+              <div className="bb-post__hero">
                 {article.img ? (
-                  <img className="bb-post__cover" src={article.img} alt="" />
+                  <img className="bb-post__cover" src={article.img} alt="" loading="eager" decoding="async" />
                 ) : null}
                 <div className="bb-post__meta">
                   <span>{article.read}</span>
@@ -107,14 +107,12 @@ export function BlogPostPage({ slug }) {
                 </div>
                 <h1 className="bb-post__title">{article.title}</h1>
                 <p className="bb-post__excerpt">{article.excerpt}</p>
-              </Reveal>
+              </div>
 
-              <Reveal>
-                <div
-                  className="bb-post__content"
-                  dangerouslySetInnerHTML={{ __html: articleHtml }}
-                />
-              </Reveal>
+              <div
+                className="bb-post__content"
+                dangerouslySetInnerHTML={{ __html: articleHtml }}
+              />
             </>
           )}
         </div>

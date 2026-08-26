@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { articleInputSchema } from "@/lib/cms/validators";
 import { deleteArticle, getArticleAdmin, updateArticle } from "@/lib/cms/blogRepository";
+import { revalidateBlogCache } from "@/lib/cms/revalidateBlog";
 import { requireAdmin } from "@/lib/cms/routeAuth";
 
 export async function GET(request, { params }) {
@@ -24,6 +25,7 @@ export async function PATCH(request, { params }) {
   try {
     const ok = await updateArticle(id, parsed.data);
     if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    revalidateBlogCache();
     return NextResponse.json({ ok: true });
   } catch (error) {
     if (error?.message === "SCHEDULED_AT_REQUIRED") {
@@ -38,5 +40,6 @@ export async function DELETE(_request, { params }) {
   if (unauthorized) return unauthorized;
   const { id } = await params;
   await deleteArticle(id);
+  revalidateBlogCache();
   return NextResponse.json({ ok: true });
 }

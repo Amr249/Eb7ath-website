@@ -10,7 +10,7 @@ import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { blogDict } from "@/lib/i18n/blog";
 import { IMAGES } from "@/lib/assets";
-import { Reveal, scaleIn, motion, fadeUp, staggerContainer } from "@/lib/motion";
+import { Reveal, scaleIn } from "@/lib/motion";
 
 export function BlogPage({ initialPostsByLocale }) {
   const { lang, dir, langClass, langLabel, toggleLang } = useLanguage();
@@ -46,20 +46,9 @@ export function BlogPage({ initialPostsByLocale }) {
             <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.feat.lead}</p>
           </Reveal>
 
-          <motion.div
-            className="bb-grid"
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="bb-grid">
             {sourcePosts.map((post, i) => (
-              <motion.div
-                key={post.slug || i}
-                className="bh-card"
-                variants={fadeUp}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              >
+              <div key={post.slug || i} className="bh-card">
                 <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
                   <img className="bb-card__img" src={post.img} alt="" loading="lazy" decoding="async" />
                   <div className="bb-card__body">
@@ -73,9 +62,9 @@ export function BlogPage({ initialPostsByLocale }) {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           {sourcePosts.length === 0 && (
             <p style={{ textAlign: "center", color: "var(--text-muted)", padding: "48px 0" }}>{t.feat.empty}</p>

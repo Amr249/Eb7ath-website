@@ -304,22 +304,32 @@ export function LandingPage() {
         <div className="baheth-container">
           <RevealGroup style={{ textAlign: "center", maxWidth: "48rem", margin: "0 auto 64px" }}>
             <RevealItem hover={false}>
-              <p className="bh-eyebrow">{t.oppsHead.eyebrow}</p>
+              <p className="bh-eyebrow bl-opps-head__eyebrow">{t.oppsHead.eyebrow}</p>
             </RevealItem>
-            <RevealItem hover={false}>
-              <h2 style={{ margin: "16px 0 20px" }}>{t.oppsHead.h2}</h2>
-            </RevealItem>
+            {t.oppsHead.h2 ? (
+              <RevealItem hover={false}>
+                <h2 style={{ margin: "16px 0 20px" }}>{t.oppsHead.h2}</h2>
+              </RevealItem>
+            ) : null}
             <RevealItem hover={false}>
               <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.oppsHead.lead}</p>
             </RevealItem>
           </RevealGroup>
-          <RevealGroup className="bl-3" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+          <RevealGroup
+            className="bl-3 bl-mentors-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: t.projects.length === 1 ? "minmax(300px, 400px)" : "repeat(3, 1fr)",
+              gap: 32,
+              justifyContent: "center",
+            }}
+          >
             {t.projects.map((p, i) => (
-              <RevealItem key={i} variants={scaleIn}>
+              <RevealItem key={p.slug ?? i} variants={scaleIn}>
                 <Card>
                   <motion.img
                     src={p.img}
-                    alt=""
+                    alt={p.title}
                     initial={{ opacity: 0, scale: 1.06 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.35 }}
@@ -328,7 +338,12 @@ export function LandingPage() {
                   />
                   <div style={{ padding: 24 }}>
                     <h5 style={{ fontSize: "var(--text-h5)", marginBottom: 8 }}>{p.title}</h5>
-                    <p style={{ color: "var(--text-muted)" }}>{p.body}</p>
+                    <p style={{ color: "var(--text-body)", marginBottom: p.affiliation ? 8 : 0 }}>{p.body}</p>
+                    {p.affiliation ? (
+                      <p className="bl-mentor-card__affiliation" style={{ color: "var(--text-muted)", fontSize: "var(--text-small)", lineHeight: 1.5, margin: 0 }}>
+                        {p.affiliation}
+                      </p>
+                    ) : null}
                     {p.tags?.length > 0 && (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, margin: "16px 0" }}>
                         {p.tags.map((tg, j) => (
@@ -337,7 +352,9 @@ export function LandingPage() {
                       </div>
                     )}
                     <div style={{ marginTop: 16 }}>
-                      <Button variant="link">{t.oppsHead.view}</Button>
+                      <Button variant="link" asChild>
+                        <Link href={`/experts/${p.slug}`}>{t.oppsHead.view}</Link>
+                      </Button>
                     </div>
                   </div>
                 </Card>
@@ -345,7 +362,9 @@ export function LandingPage() {
             ))}
           </RevealGroup>
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
-            <Button variant="primary" size="sm">{t.oppsHead.viewAll}</Button>
+            <Button variant="primary" size="sm" asChild>
+              <Link href={t.projects[0]?.slug ? `/experts/${t.projects[0].slug}` : "/#mentors"}>{t.oppsHead.viewAll}</Link>
+            </Button>
           </Reveal>
         </div>
       </section>

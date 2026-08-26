@@ -14,9 +14,8 @@ import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
 import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
-import { BlogCardsSkeleton } from "@/components/blog/BlogCardsSkeleton";
 import { IMAGES } from "@/lib/assets";
-import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
+import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp, staggerContainer } from "@/lib/motion";
 import { CountUp } from "@/lib/CountUp";
 import { StepsSection } from "@/components/sections/StepsSection.jsx";
 
@@ -59,18 +58,17 @@ function TestimonialColumn({ voices, direction = "up" }) {
   );
 }
 
-export function LandingPage() {
+export function LandingPage({ initialPostsByLocale }) {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = landingDict(lang);
-  const { posts: cmsPosts, loading: blogLoading } = useCmsBlogPosts(lang, { limit: 3 });
+  const { posts: cmsPosts } = useCmsBlogPosts(lang, { limit: 3, initialPostsByLocale });
   const blogCards = useMemo(() => {
-    if (blogLoading) return [];
     if (cmsPosts.length) {
       const readMore = t.blogHome.readMore;
       return cmsPosts.map((post) => ({ ...post, readMore }));
     }
     return t.blogCards;
-  }, [cmsPosts, blogLoading, t.blogCards, t.blogHome.readMore]);
+  }, [cmsPosts, t.blogCards, t.blogHome.readMore]);
   const allVoices = useMemo(() => [...t.voicesLeft, ...t.voicesRight], [t.voicesLeft, t.voicesRight]);
   const stackRef = useRef(null);
   const heroImages = [IMAGES.homeHero2, IMAGES.homeHero3, IMAGES.homeHero4];
@@ -382,29 +380,30 @@ export function LandingPage() {
               <p style={{ fontSize: "var(--text-large)", color: "var(--text-muted)" }}>{t.blogHome.lead}</p>
             </RevealItem>
           </RevealGroup>
-          {blogLoading ? (
-            <BlogCardsSkeleton count={3} className="bl-blog-grid" />
-          ) : (
-            <RevealGroup className="bl-blog-grid">
-              {blogCards.map((post, i) => (
-                <RevealItem key={post.slug || i} variants={fadeUp}>
-                  <Card>
-                    <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
-                      <img className="bb-card__img" src={post.img} alt="" />
-                      <div className="bb-card__body">
-                        <div className="bb-meta">
-                          <span className="bb-meta__read">{post.read}</span>
-                        </div>
-                        <h3 className="bb-card__title">{post.title}</h3>
-                        <p className="bb-card__excerpt">{post.excerpt}</p>
-                        <span className="bh-btn bh-btn--primary bh-btn--sm">{post.readMore}</span>
+          <motion.div
+            className="bl-blog-grid"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {blogCards.map((post, i) => (
+              <motion.div key={post.slug || i} variants={fadeUp}>
+                <Card>
+                  <Link href={post.slug ? `/blog/${post.slug}` : "/blog"} className="bb-card__link">
+                    <img className="bb-card__img" src={post.img} alt="" loading="lazy" decoding="async" />
+                    <div className="bb-card__body">
+                      <div className="bb-meta">
+                        <span className="bb-meta__read">{post.read}</span>
                       </div>
-                    </Link>
-                  </Card>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          )}
+                      <h3 className="bb-card__title">{post.title}</h3>
+                      <p className="bb-card__excerpt">{post.excerpt}</p>
+                      <span className="bh-btn bh-btn--primary bh-btn--sm">{post.readMore}</span>
+                    </div>
+                  </Link>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
             <Link href="/blog">
               <Button variant="primary" size="sm">{t.blogHome.cta}</Button>

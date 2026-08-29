@@ -5,7 +5,14 @@ import { ImagePlus, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
-export function CoverImageUpload({ value, onChange }) {
+export function CoverImageUpload({
+  value,
+  onChange,
+  label = "صورة الغلاف",
+  uploadType = "blog",
+  emptyLabel = "ارفع صورة الغلاف",
+  previewClassName = "h-48 w-full object-cover",
+}) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -19,6 +26,7 @@ export function CoverImageUpload({ value, onChange }) {
 
     const body = new FormData();
     body.append("file", file);
+    body.append("type", uploadType);
 
     try {
       const res = await fetch("/api/admin/upload", { method: "POST", body });
@@ -43,11 +51,11 @@ export function CoverImageUpload({ value, onChange }) {
 
   return (
     <div className="space-y-3">
-      <Label>صورة الغلاف</Label>
+      <Label>{label}</Label>
 
       {value ? (
         <div className="overflow-hidden rounded-lg border bg-zinc-50">
-          <img src={value} alt="" className="h-48 w-full object-cover" />
+          <img src={value} alt="" className={previewClassName} />
           <div className="flex gap-2 p-3">
             <Button type="button" variant="outline" size="sm" disabled={uploading} onClick={() => inputRef.current?.click()}>
               {uploading ? (
@@ -80,7 +88,7 @@ export function CoverImageUpload({ value, onChange }) {
           ) : (
             <>
               <ImagePlus className="h-8 w-8 text-zinc-500" />
-              <span className="text-sm font-medium text-zinc-700">ارفع صورة الغلاف</span>
+              <span className="text-sm font-medium text-zinc-700">{emptyLabel}</span>
               <span className="text-xs text-zinc-500">JPG, PNG, WEBP, AVIF, GIF حتى 5MB</span>
             </>
           )}

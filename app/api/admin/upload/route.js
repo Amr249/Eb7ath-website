@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isImageKitConfigured, uploadBlogImage } from "@/lib/cms/imagekit";
+import { isImageKitConfigured, uploadBlogImage, uploadExpertImage } from "@/lib/cms/imagekit";
 import { requireAdmin } from "@/lib/cms/routeAuth";
 
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -15,6 +15,7 @@ export async function POST(request) {
 
   const formData = await request.formData();
   const file = formData.get("file");
+  const uploadType = String(formData.get("type") || "blog");
 
   if (!file || typeof file === "string") {
     return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
@@ -30,7 +31,10 @@ export async function POST(request) {
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
-    const url = await uploadBlogImage(buffer, file.name);
+    const url =
+      uploadType === "expert"
+        ? await uploadExpertImage(buffer, file.name)
+        : await uploadBlogImage(buffer, file.name);
     return NextResponse.json({ ok: true, url });
   } catch (error) {
     return NextResponse.json(

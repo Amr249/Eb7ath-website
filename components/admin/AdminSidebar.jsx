@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, LogOut } from "lucide-react";
+import { FileText, GraduationCap, LogOut, Microscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin", label: "المقالات", icon: FileText, match: (pathname) => pathname === "/admin" || pathname.startsWith("/admin/articles") },
+  { href: "/admin/experts", label: "الخبراء", icon: GraduationCap, match: (pathname) => pathname.startsWith("/admin/experts") },
+  { href: "/admin/research", label: "الأبحاث", icon: Microscope, match: (pathname) => pathname.startsWith("/admin/research") },
 ];
 
 export function AdminSidebar() {
@@ -24,7 +26,7 @@ export function AdminSidebar() {
       <div className="flex h-16 items-center border-b border-zinc-800 px-6">
         <div>
           <p className="text-xs tracking-[0.2em] text-zinc-400">إِبحَث</p>
-          <p className="text-lg font-semibold">إدارة المدونة</p>
+          <p className="text-lg font-semibold">لوحة الإدارة</p>
         </div>
       </div>
 

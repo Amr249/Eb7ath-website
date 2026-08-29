@@ -58,9 +58,9 @@ function TestimonialColumn({ voices, direction = "up" }) {
   );
 }
 
-export function LandingPage({ initialPostsByLocale }) {
+export function LandingPage({ initialPostsByLocale, initialExpertsByLocale }) {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
-  const t = landingDict(lang);
+  const t = landingDict(lang, initialExpertsByLocale);
   const { posts: cmsPosts } = useCmsBlogPosts(lang, { limit: 3, initialPostsByLocale });
   const blogCards = useMemo(() => {
     if (cmsPosts.length) {
@@ -361,7 +361,7 @@ export function LandingPage({ initialPostsByLocale }) {
           </RevealGroup>
           <Reveal delay={0.1} style={{ display: "flex", justifyContent: "center", marginTop: 48 }}>
             <Button variant="primary" size="sm" asChild>
-              <Link href={t.projects[0]?.slug ? `/experts/${t.projects[0].slug}` : "/#mentors"}>{t.oppsHead.viewAll}</Link>
+              <Link href="/experts">{t.oppsHead.viewAll}</Link>
             </Button>
           </Reveal>
         </div>

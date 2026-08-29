@@ -11,6 +11,7 @@ const PREFIXES = {
   about: "ba",
   blog: "bb",
   faq: "bb",
+  consultants: "bb",
 };
 
 export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggleLang }) {
@@ -44,6 +45,7 @@ export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggl
         <nav className={`${p}-hdr__links`}>
           <Link href="/" style={linkStyle("home")}>{lang.nav.home}</Link>
           <Link href="/about" style={linkStyle("about")}>{lang.nav.about}</Link>
+          <Link href="/experts" style={linkStyle("consultants")}>{lang.nav.consultants}</Link>
           <Link href="/blog" style={linkStyle("blog")}>{lang.nav.blog}</Link>
           <Link href="/faq" style={linkStyle("faq")}>{lang.nav.faq}</Link>
         </nav>
@@ -69,6 +71,7 @@ export function SiteHeader({ page, active, lang, locale = "ar", langLabel, toggl
         <div className={`${p}-mobile`}>
           <Link href="/" style={linkStyle("home")} onClick={() => setMenuOpen(false)}>{lang.nav.home}</Link>
           <Link href="/about" style={linkStyle("about")} onClick={() => setMenuOpen(false)}>{lang.nav.about}</Link>
+          <Link href="/experts" style={linkStyle("consultants")} onClick={() => setMenuOpen(false)}>{lang.nav.consultants}</Link>
           <Link href="/blog" style={linkStyle("blog")} onClick={() => setMenuOpen(false)}>{lang.nav.blog}</Link>
           <Link href="/faq" style={linkStyle("faq")} onClick={() => setMenuOpen(false)}>{lang.nav.faq}</Link>
           <div className={`${p}-mobile__cta`}>

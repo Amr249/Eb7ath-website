@@ -7,16 +7,15 @@ import { Badge } from "@/components/display/Badge.jsx";
 import { SiteHeader } from "@/components/site/SiteHeader.jsx";
 import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
-import { getExpert, getResearch } from "@/lib/experts/catalog";
 import { localizedText } from "@/lib/experts/localize";
 import { expertsDict, formatPublicationDate } from "@/lib/i18n/experts";
 import { Reveal, RevealGroup, RevealItem } from "@/lib/motion";
 
-export function ResearchPublicationPage({ slug }) {
+export function ResearchPublicationPage({ slug, research: researchProp, expert: expertProp }) {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = expertsDict(lang);
-  const research = getResearch(slug);
-  const expert = research ? getExpert(research.expertSlug) : null;
+  const research = researchProp;
+  const expert = expertProp;
 
   if (!mounted) return null;
 

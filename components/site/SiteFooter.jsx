@@ -26,6 +26,7 @@ export function SiteFooter({ footer, locale = "ar" }) {
           <ul className="site-footer__links">
             <li><Link href="/">{footer.nav?.home ?? "Home"}</Link></li>
             <li><Link href="/about">{footer.nav?.about ?? "About us"}</Link></li>
+            <li><Link href="/experts">{footer.nav?.consultants ?? "Consultants"}</Link></li>
             <li><Link href="/blog">{footer.nav?.blog ?? "Blog"}</Link></li>
             <li><Link href="/faq">{footer.nav?.faq ?? "FAQ"}</Link></li>
           </ul>

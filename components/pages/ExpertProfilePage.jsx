@@ -6,15 +6,14 @@ import { Icon } from "@/components/icon/Icon.jsx";
 import { SiteHeader } from "@/components/site/SiteHeader.jsx";
 import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
-import { getExpert, getResearchForExpert } from "@/lib/experts/catalog";
 import { expertsDict, formatPublicationDate } from "@/lib/i18n/experts";
 import { Reveal, RevealGroup, RevealItem, scaleIn } from "@/lib/motion";
 
-export function ExpertProfilePage({ slug }) {
+export function ExpertProfilePage({ slug, expert: expertProp, publications: publicationsProp = [] }) {
   const { lang, dir, langClass, langLabel, toggleLang, mounted } = useLanguage();
   const t = expertsDict(lang);
-  const expert = getExpert(slug);
-  const publications = expert ? getResearchForExpert(slug) : [];
+  const expert = expertProp;
+  const publications = publicationsProp;
 
   if (!mounted) return null;
 

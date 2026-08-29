@@ -806,6 +806,34 @@
 .bb-grid > * {
   min-width: 0;
 }
+
+/* Consultants listing (/experts) */
+.bc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+.bc-grid > * {
+  min-width: 0;
+  display: flex;
+}
+.bc-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+}
+.bc-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px;
+}
+.bc-card__cta {
+  margin-top: auto;
+  padding-top: 16px;
+}
 @media (max-width: 991px) {
   .bb-hdr__links { display: none; }
   .bb-hdr__cta { display: none; }
@@ -815,10 +843,12 @@
   .bb-mobile__cta { display: flex; gap: 12px; margin-top: 16px; }
   .bb-grid { grid-template-columns: 1fr; }
   .bl-blog-grid { grid-template-columns: 1fr 1fr; }
+  .bc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
   .bl-blog-grid { grid-template-columns: 1fr; gap: 24px; }
   .bb-grid { gap: 32px; }
+  .bc-grid { grid-template-columns: 1fr; gap: 24px; }
 }
 
 /* Shared footer layout (used by all pages) */

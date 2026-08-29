@@ -326,13 +326,13 @@ export function LandingPage({ initialPostsByLocale, initialExpertsByLocale }) {
               <RevealItem key={p.slug ?? i} variants={scaleIn}>
                 <Card>
                   <motion.img
+                    className="bh-expert-photo"
                     src={p.img}
                     alt={p.title}
                     initial={{ opacity: 0, scale: 1.06 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.6, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
-                    style={{ width: "100%", aspectRatio: "3/2", objectFit: "cover", display: "block" }}
                   />
                   <div style={{ padding: 24 }}>
                     <h5 style={{ fontSize: "var(--text-h5)", marginBottom: 8 }}>{p.title}</h5>

@@ -107,7 +107,7 @@ export function ConsultantsPage({ expertsByLocale }) {
 
       <section className="scheme-3" style={{ paddingBlock: "var(--section-py)" }}>
         <Reveal className="baheth-container" style={{ maxWidth: "40rem", textAlign: "center" }}>
-          <h2 style={{ marginBottom: 20 }}>{t.cta.h2}</h2>
+          <h2 className="bc-cta__title">{t.cta.h2}</h2>
           <p style={{ fontSize: "var(--text-medium)", color: "var(--text-muted)" }}>{t.cta.lead}</p>
           <div style={{ marginTop: 28, display: "flex", justifyContent: "center" }}>
             <Button variant="primary" asChild>

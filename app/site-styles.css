@@ -767,6 +767,12 @@
 }
 .bb-post__state { padding: 48px 0; text-align: center; color: var(--text-muted); }
 .bf-faq { max-width: 52rem; margin-inline: auto; }
+.bf-hero__title {
+  margin: 16px 0 20px;
+  font-size: clamp(var(--text-h5), 3.2vw, var(--text-h3));
+  line-height: var(--leading-heading);
+  white-space: nowrap;
+}
 .bf-faq .bh-accordion__trigger {
   font-size: var(--text-large);
   font-weight: 600;
@@ -821,6 +827,12 @@
 .bc-hero__title {
   margin: 0 0 20px;
   font-size: clamp(var(--text-h5), 3.2vw, var(--text-h3));
+  line-height: var(--leading-heading);
+  white-space: pre-line;
+}
+.bc-cta__title {
+  margin: 0 0 20px;
+  font-size: clamp(var(--text-h5), 3vw, var(--text-h3));
   line-height: var(--leading-heading);
   white-space: pre-line;
 }

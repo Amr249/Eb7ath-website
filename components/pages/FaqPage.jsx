@@ -22,7 +22,7 @@ export function FaqPage() {
       <section className="scheme-1 logo-alt" style={{ paddingBlock: "var(--section-py)" }}>
         <Reveal className="baheth-container" style={{ maxWidth: "48rem", textAlign: "center" }}>
           <p className="bh-eyebrow">{t.hero.eyebrow}</p>
-          <h1 style={{ margin: "16px 0 20px" }}>{t.hero.h1}</h1>
+          <h1 className="bf-hero__title">{t.hero.h1}</h1>
           <p style={{ fontSize: "var(--text-medium)", color: "var(--color-white-50)" }}>{t.hero.sub}</p>
         </Reveal>
       </section>

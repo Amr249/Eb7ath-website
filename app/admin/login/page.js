@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-800">
             <LockKeyhole className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-semibold">لوحة إدارة إِبحَث</h1>
+          <h1 className="text-2xl font-semibold">لوحة إدارة اِبْحَثْ</h1>
           <p className="mt-2 text-sm text-zinc-400">سجّل الدخول لإدارة مقالات المدونة</p>
         </div>
 

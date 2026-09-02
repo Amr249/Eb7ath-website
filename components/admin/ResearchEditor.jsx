@@ -24,6 +24,7 @@ export function ResearchEditor({ researchId }) {
   const editing = Boolean(researchId);
   const [form, setForm] = useState(emptyResearchForm);
   const [experts, setExperts] = useState([]);
+  const [institutionExperts, setInstitutionExperts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(editing);
   const [error, setError] = useState("");
@@ -31,10 +32,20 @@ export function ResearchEditor({ researchId }) {
   const pageTitle = useMemo(() => (editing ? "تعديل البحث" : "إضافة بحث جديد"), [editing]);
 
   useEffect(() => {
-    fetch("/api/admin/experts")
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data) => setExperts(data.items || []))
-      .catch(() => setExperts([]));
+    Promise.all([
+      fetch("/api/admin/experts").then((res) => (res.ok ? res.json() : { items: [] })),
+      fetch("/api/admin/institution-experts").then((res) => (res.ok ? res.json() : { items: [] })),
+    ])
+      .then(([expertsData, institutionData]) => {
+        setExperts(expertsData.items || []);
+        setInstitutionExperts(
+          (institutionData.items || []).filter((item) => item.status === "published")
+        );
+      })
+      .catch(() => {
+        setExperts([]);
+        setInstitutionExperts([]);
+      });
   }, []);
 
   useEffect(() => {
@@ -64,12 +75,41 @@ export function ResearchEditor({ researchId }) {
 
   function updateMember(index, field, value) {
     setForm((prev) => {
-      const teamMembers = prev.teamMembers.map((member, i) =>
+      let teamMembers = prev.teamMembers.map((member, i) =>
         i === index ? { ...member, [field]: value } : member
       );
+
+      if (field === "institutionExpertId" && value) {
+        const selected = institutionExperts.find((item) => item.id === value);
+        if (selected) {
+          teamMembers = teamMembers.map((member, i) =>
+            i === index
+              ? {
+                  ...member,
+                  institutionExpertId: value,
+                  nameEn: selected.locales?.en?.name || member.nameEn,
+                  nameAr: selected.locales?.ar?.name || member.nameAr,
+                  affiliationEn: selected.locales?.en?.affiliation || member.affiliationEn,
+                  affiliationAr: selected.locales?.ar?.affiliation || member.affiliationAr,
+                  email: "",
+                  isCorresponding: true,
+                }
+              : member
+          );
+          teamMembers = setCorrespondingMember(teamMembers, index);
+        }
+      }
+
       if (field === "isCorresponding" && value) {
         return { ...prev, teamMembers: setCorrespondingMember(teamMembers, index) };
       }
+
+      if (field === "isCorresponding" && !value) {
+        teamMembers = teamMembers.map((member, i) =>
+          i === index ? { ...member, institutionExpertId: "" } : member
+        );
+      }
+
       return { ...prev, teamMembers };
     });
   }
@@ -96,6 +136,15 @@ export function ResearchEditor({ researchId }) {
     if (!form.expertId) {
       setLoading(false);
       setError("يرجى اختيار الخبير المرتبط بالبحث.");
+      return;
+    }
+
+    const missingInstitutionExpert = form.teamMembers.some(
+      (member) => member.isCorresponding && !member.institutionExpertId
+    );
+    if (missingInstitutionExpert) {
+      setLoading(false);
+      setError("يرجى اختيار خبير مؤسسة ابحث للمؤلف المراسل.");
       return;
     }
 
@@ -320,7 +369,9 @@ export function ResearchEditor({ researchId }) {
                 <CardHeader className="flex flex-row items-center justify-between gap-4">
                   <div>
                     <CardTitle>فريق الباحثين</CardTitle>
-                    <CardDescription>أضف الباحثين وحدد المؤلف المراسل (corresponding author).</CardDescription>
+                    <CardDescription>
+                      أضف الباحثين وحدد خبير مؤسسة ابحث (المؤلف المراسل) من القائمة.
+                    </CardDescription>
                   </div>
                   <Button type="button" variant="outline" size="sm" onClick={addMember}>
                     إضافة باحث
@@ -384,15 +435,41 @@ export function ResearchEditor({ researchId }) {
                         </div>
 
                         <div className="grid gap-3 sm:grid-cols-2">
-                          <div className="space-y-2">
-                            <Label>البريد الإلكتروني</Label>
-                            <Input
-                              type="email"
-                              value={member.email}
-                              onChange={(e) => updateMember(index, "email", e.target.value)}
-                              dir="ltr"
-                            />
-                          </div>
+                          {member.isCorresponding ? (
+                            <div className="space-y-2 sm:col-span-2">
+                              <Label>خبير مؤسسة ابحث (المؤلف المراسل)</Label>
+                              <Select
+                                value={member.institutionExpertId || ""}
+                                onChange={(e) => updateMember(index, "institutionExpertId", e.target.value)}
+                                required
+                              >
+                                <option value="">اختر خبير المؤسسة</option>
+                                {institutionExperts.map((item) => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.locales?.ar?.name || item.locales?.en?.name}
+                                  </option>
+                                ))}
+                              </Select>
+                              {institutionExperts.length === 0 ? (
+                                <p className="text-xs text-muted-foreground">
+                                  لا يوجد خبراء مؤسسة منشورون.{" "}
+                                  <Link href="/admin/institution-experts/new" className="underline">
+                                    أضف خبيراً جديداً
+                                  </Link>
+                                </p>
+                              ) : null}
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <Label>البريد الإلكتروني</Label>
+                              <Input
+                                type="email"
+                                value={member.email}
+                                onChange={(e) => updateMember(index, "email", e.target.value)}
+                                dir="ltr"
+                              />
+                            </div>
+                          )}
                           <div className="flex items-end pb-2">
                             <label className="flex cursor-pointer items-center gap-2 text-sm">
                               <input
@@ -401,7 +478,7 @@ export function ResearchEditor({ researchId }) {
                                 onChange={(e) => updateMember(index, "isCorresponding", e.target.checked)}
                                 className="h-4 w-4 rounded border-zinc-300"
                               />
-                              مؤلف مراسل (Corresponding)
+                              خبير مؤسسة ابحث (المؤلف المراسل)
                             </label>
                           </div>
                         </div>

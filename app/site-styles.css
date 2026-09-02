@@ -74,7 +74,7 @@
 }
 .bl-hero-grid p,
 .bl-hero-grid__sub {
-  font-size: calc(var(--text-small) * 1.2);
+  font-size: calc(var(--text-small) * 1.5);
   line-height: var(--leading-body);
 }
 
@@ -262,7 +262,7 @@
   .bl-mobile a { padding: 12px 4px; color: var(--scheme-text); font-weight: 500; font-size: var(--text-large); }
   .bl-mobile__cta { display: flex; gap: 12px; margin-top: 16px; }
   .bl-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .bl-hero-grid__sub { font-size: calc(var(--text-tiny) * 1.2); }
+  .bl-hero-grid__sub { font-size: calc(var(--text-tiny) * 1.5); }
   .bl-3 { grid-template-columns: 1fr !important; }
   .bl-path-card__split {
     grid-template-columns: 1fr;
@@ -818,9 +818,15 @@
 }
 
 /* Consultants listing (/experts) */
+.bc-hero__title {
+  margin: 0 0 20px;
+  font-size: clamp(var(--text-h5), 3.2vw, var(--text-h3));
+  line-height: var(--leading-heading);
+  white-space: pre-line;
+}
 .bc-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 32px;
   align-items: stretch;
 }
@@ -858,7 +864,7 @@
 @media (max-width: 767px) {
   .bl-blog-grid { grid-template-columns: 1fr; gap: 24px; }
   .bb-grid { gap: 32px; }
-  .bc-grid { grid-template-columns: 1fr; gap: 24px; }
+  .bc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 }
 
 /* Shared footer layout (used by all pages) */
@@ -1412,6 +1418,24 @@
 }
 .br-team-card__email:hover {
   text-decoration: underline;
+}
+.br-team-card__profile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-button);
+  background: var(--scheme-accent);
+  color: var(--color-white);
+  font-size: var(--text-tiny);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.br-team-card__profile-btn:hover {
+  opacity: 0.9;
 }
 .br-team-card__tag {
   padding: 2px 8px;

@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
   const { expert } = await getExpertProfileData(slug);
   const name = expert?.name?.ar || expert?.name?.en || slug;
   return {
-    title: `${name} | إِبحَث`,
+    title: `${name} | اِبْحَثْ`,
     description: expert?.specialty?.ar || expert?.specialty?.en || "",
   };
 }

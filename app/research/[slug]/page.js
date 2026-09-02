@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const { research } = await getResearchPublicationData(slug);
   return {
-    title: research?.title ? `${research.title.slice(0, 60)}… | إِبحَث` : `البحث | إِبحَث`,
+    title: research?.title ? `${research.title.slice(0, 60)}… | اِبْحَثْ` : `البحث | اِبْحَثْ`,
     description: research?.journal || slug,
   };
 }

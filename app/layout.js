@@ -6,8 +6,8 @@ import { IMAGES } from "@/lib/assets";
 import { SmoothScroll } from "@/components/site/SmoothScroll.jsx";
 
 export const metadata = {
-  title: "إِبحَث | البحث الطبي",
-  description: "إِبحَث تربط الأطباء السعوديين بفرق بحثية نشطة ودعم أكاديمي لتطوير مسيرتهم المهنية.",
+  title: "اِبْحَثْ | البحث الطبي",
+  description: "اِبْحَثْ تربط الأطباء السعوديين بفرق بحثية نشطة ودعم أكاديمي لتطوير مسيرتهم المهنية.",
   icons: {
     icon: IMAGES.siteIcon,
     apple: IMAGES.siteIcon,

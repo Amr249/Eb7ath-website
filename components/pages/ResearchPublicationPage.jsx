@@ -39,9 +39,6 @@ export function ResearchPublicationPage({ slug, research: researchProp, expert: 
   const backHref = expert ? `/experts/${expert.slug}` : "/#mentors";
   const consultantName = localizedText(research.consultant.name, lang);
   const consultantAffiliation = localizedText(research.consultant.affiliation, lang);
-  const correspondingName = research.correspondingAuthor
-    ? localizedText(research.correspondingAuthor.name, "en")
-    : null;
 
   const facts = [
     { icon: "book-open", label: t.research.journalLabel, value: research.journal },
@@ -143,9 +140,9 @@ export function ResearchPublicationPage({ slug, research: researchProp, expert: 
           <RevealGroup className="br-team-grid">
             {research.researchers.map((person, i) => {
               const enName = localizedText(person.name, "en");
-              const isCorresponding = correspondingName === enName;
+              const isCorresponding = Boolean(person.isCorresponding);
               return (
-                <RevealItem key={enName} hover={false} className="br-team-card">
+                <RevealItem key={`${enName}-${i}`} hover={false} className="br-team-card">
                   <span className="br-team-card__index">{i + 1}</span>
                   <span className="br-team-card__body">
                     <span className="br-team-card__name-row">
@@ -159,7 +156,17 @@ export function ResearchPublicationPage({ slug, research: researchProp, expert: 
                         {localizedText(person.affiliation, lang)}
                       </span>
                     ) : null}
-                    {person.email ? (
+                    {isCorresponding && person.profileUrl ? (
+                      <a
+                        href={person.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="br-team-card__profile-btn"
+                      >
+                        {t.research.viewInstitutionExpertProfile}
+                      </a>
+                    ) : null}
+                    {!isCorresponding && person.email ? (
                       <a
                         href={`mailto:${person.email}`}
                         className="br-team-card__email"

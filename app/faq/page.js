@@ -1,7 +1,7 @@
 import { FaqPage } from "@/components/pages/FaqPage";
 
 export const metadata = {
-  title: "الأسئلة الشائعة | إِبحَث",
+  title: "الأسئلة الشائعة | اِبْحَثْ",
 };
 
 export default function Faq() {

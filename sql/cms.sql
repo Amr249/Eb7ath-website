@@ -138,3 +138,31 @@ CREATE INDEX IF NOT EXISTS idx_research_publications_expert_id ON research_publi
 CREATE INDEX IF NOT EXISTS idx_research_publications_status ON research_publications(status);
 CREATE INDEX IF NOT EXISTS idx_research_publications_published_at ON research_publications(published_at DESC);
 CREATE INDEX IF NOT EXISTS idx_research_team_members_research_id ON research_team_members(research_id, sort_order);
+
+-- Institution experts (Eb7ath researchers / corresponding authors)
+CREATE TABLE IF NOT EXISTS institution_experts (
+  id TEXT PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  researchgate_url TEXT,
+  status TEXT NOT NULL DEFAULT 'draft',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS institution_expert_localizations (
+  institution_expert_id TEXT NOT NULL REFERENCES institution_experts(id) ON DELETE CASCADE,
+  locale TEXT NOT NULL,
+  name TEXT NOT NULL,
+  affiliation TEXT NOT NULL,
+  PRIMARY KEY (institution_expert_id, locale)
+);
+
+CREATE INDEX IF NOT EXISTS idx_institution_experts_status ON institution_experts(status);
+CREATE INDEX IF NOT EXISTS idx_institution_expert_localizations_locale ON institution_expert_localizations(locale);
+
+ALTER TABLE research_team_members
+  ADD COLUMN IF NOT EXISTS institution_expert_id TEXT REFERENCES institution_experts(id) ON DELETE SET NULL;
+
+CREATE INDEX IF NOT EXISTS idx_research_team_members_institution_expert_id
+  ON research_team_members(institution_expert_id);

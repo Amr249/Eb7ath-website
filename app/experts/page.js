@@ -2,7 +2,7 @@ import { ConsultantsPage } from "@/components/pages/ConsultantsPage";
 import { getAllExpertsByLocale } from "@/lib/cms/getExpertsData";
 
 export const metadata = {
-  title: "الاستشاريين | إِبحَث",
+  title: "الاستشاريين | اِبْحَثْ",
   description:
     "نخبة من الاستشاريين والأساتذة الجامعيين الممارسين في المنظومة الصحية السعودية، يشرفون على منهجية البحث ويدعمون النشر في المجلات المحكّمة.",
 };

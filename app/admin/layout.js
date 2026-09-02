@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "لوحة إدارة إِبحَث",
+  title: "لوحة إدارة اِبْحَثْ",
 };
 
 export default function AdminRootLayout({ children }) {

@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
   const articles = await getBlogPostBySlug(slug);
   const title = articles.ar?.title || articles.en?.title;
   return {
-    title: title ? `${title} | إِبحَث` : "المدونة | إِبحَث",
+    title: title ? `${title} | اِبْحَثْ` : "المدونة | اِبْحَثْ",
     description: articles.ar?.excerpt || articles.en?.excerpt || slug,
   };
 }

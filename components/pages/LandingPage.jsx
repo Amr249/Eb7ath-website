@@ -13,7 +13,7 @@ import { SiteFooter } from "@/components/site/SiteFooter.jsx";
 import { useLanguage } from "@/lib/useLanguage";
 import { useCmsBlogPosts } from "@/lib/useCmsBlogPosts";
 import { landingDict } from "@/lib/i18n/landing";
-import { RESEARCH_TEAM_FORM_URL } from "@/lib/externalLinks";
+import { RESEARCH_TEAM_FORM_URL, WHATSAPP_URL } from "@/lib/externalLinks";
 import { IMAGES } from "@/lib/assets";
 import { Reveal, RevealGroup, RevealItem, scaleIn, HeroEnter, HeroStagger, motion, fadeUp } from "@/lib/motion";
 import { CountUp } from "@/lib/CountUp";
@@ -152,7 +152,7 @@ export function LandingPage({ initialPostsByLocale, initialExpertsByLocale }) {
             <motion.h1 variants={fadeUp} style={{ color: "var(--color-white)", marginBottom: 28 }}>{t.hero.title}</motion.h1>
             <motion.div variants={fadeUp} style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
               <Button variant="alternate" asChild>
-                <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.hero.start}</a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{t.hero.start}</a>
               </Button>
               <Button variant="secondary" asChild>
                 <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{t.hero.learn}</a>
@@ -273,7 +273,7 @@ export function LandingPage({ initialPostsByLocale, initialExpertsByLocale }) {
                         <p style={{ color: "var(--text-muted)" }}>{s.body}</p>
                         <div style={{ marginTop: 24, display: "flex", gap: 16, alignItems: "center" }}>
                           <Button variant="secondary" asChild>
-                            <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{s.learn}</a>
+                            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{s.learn}</a>
                           </Button>
                           <Button variant="primary" size="sm" asChild>
                             <a href={RESEARCH_TEAM_FORM_URL} target="_blank" rel="noopener noreferrer">{s.explore}</a>

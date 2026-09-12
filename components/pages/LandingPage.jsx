@@ -314,13 +314,12 @@ export function LandingPage({ initialPostsByLocale, initialExpertsByLocale }) {
             </RevealItem>
           </RevealGroup>
           <RevealGroup
-            className="bl-3 bl-mentors-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: t.projects.length === 1 ? "minmax(300px, 400px)" : "repeat(3, 1fr)",
-              gap: 32,
-              justifyContent: "center",
-            }}
+            className="bl-mentors-grid"
+            style={
+              t.projects.length === 1
+                ? { gridTemplateColumns: "minmax(300px, 400px)" }
+                : undefined
+            }
           >
             {t.projects.map((p, i) => (
               <RevealItem key={p.slug ?? i} variants={scaleIn}>

@@ -74,7 +74,7 @@
 }
 .bl-hero-grid p,
 .bl-hero-grid__sub {
-  font-size: calc(var(--text-small) * 1.5);
+  font-size: var(--text-large);
   line-height: var(--leading-body);
 }
 
@@ -100,7 +100,7 @@
   color: #35db95;
 }
 .bl-opps-head__eyebrow {
-  font-size: calc(var(--text-medium) * 1.75);
+  font-size: var(--text-h5);
 }
 .bl-path-card__title {
   margin: 8px 0 10px;
@@ -262,7 +262,7 @@
   .bl-mobile a { padding: 12px 4px; color: var(--scheme-text); font-weight: 500; font-size: var(--text-large); }
   .bl-mobile__cta { display: flex; gap: 12px; margin-top: 16px; }
   .bl-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .bl-hero-grid__sub { font-size: calc(var(--text-tiny) * 1.5); }
+  .bl-hero-grid__sub { font-size: var(--text-medium); }
   .bl-3 { grid-template-columns: 1fr !important; }
   .bl-path-card__split {
     grid-template-columns: 1fr;
@@ -722,7 +722,7 @@
 .bb-post__hero { margin-bottom: 40px; }
 .bb-post__cover { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-image); display: block; margin-bottom: 24px; }
 .bb-post__meta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; color: var(--text-muted); font-size: var(--text-small); font-weight: 600; }
-.bb-post__title { margin: 0 0 16px; font-size: clamp(2rem, 4vw, var(--text-h2)); line-height: var(--leading-display); }
+.bb-post__title { margin: 0 0 16px; font-size: clamp(var(--text-h3), 4vw, var(--text-h2)); line-height: var(--leading-display); }
 .bb-post__excerpt { margin: 0; font-size: var(--text-large); color: var(--text-muted); line-height: 1.7; }
 .bb-post__content {
   font-size: var(--text-medium);
@@ -748,9 +748,9 @@
   overflow-wrap: anywhere;
 }
 .bb-post__content p { margin: 0 0 20px; }
-.bb-post__content h1 { margin: 32px 0 16px; font-size: clamp(1.75rem, 3vw, var(--text-h3)); line-height: var(--leading-heading); }
-.bb-post__content h2 { margin: 28px 0 14px; font-size: clamp(1.5rem, 2.5vw, var(--text-h4)); line-height: var(--leading-heading); }
-.bb-post__content h3 { margin: 24px 0 12px; font-size: clamp(1.25rem, 2vw, var(--text-h5)); line-height: var(--leading-heading); }
+.bb-post__content h1 { margin: 32px 0 16px; font-size: clamp(var(--text-h4), 3vw, var(--text-h3)); line-height: var(--leading-heading); }
+.bb-post__content h2 { margin: 28px 0 14px; font-size: clamp(var(--text-h5), 2.5vw, var(--text-h4)); line-height: var(--leading-heading); }
+.bb-post__content h3 { margin: 24px 0 12px; font-size: clamp(var(--text-h6), 2vw, var(--text-h5)); line-height: var(--leading-heading); }
 .bb-post__content ul,
 .bb-post__content ol { margin: 0 0 20px; padding-inline-start: 1.5rem; }
 .bb-post__content ul { list-style: disc; }
@@ -813,14 +813,27 @@
   min-width: 0;
 }
 
-/* Expert card portrait — matches the 3:4 source illustrations so the full
-   figure stays visible; top anchoring keeps faces in frame for other ratios. */
+/* Expert card photo — square crop; top anchoring keeps faces in frame. */
 .bh-expert-photo {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center top;
   display: block;
+}
+
+.bl-mentors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  justify-content: center;
+  align-items: stretch;
+}
+.bl-mentors-grid > * {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* Consultants listing (/experts) */
@@ -872,11 +885,24 @@
   .bb-grid { grid-template-columns: 1fr; }
   .bl-blog-grid { grid-template-columns: 1fr 1fr; }
   .bc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bl-mentors-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
   .bl-blog-grid { grid-template-columns: 1fr; gap: 24px; }
   .bb-grid { gap: 32px; }
   .bc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .bl-mentors-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .bl-stat-num--xl { font-size: 2.5rem; }
+  .bl-stat-num--lg { font-size: 2.25rem; }
+  .ba-vmv__title,
+  .bf-hero__title {
+    white-space: normal;
+  }
+  .bl-mobile a,
+  .ba-mobile a,
+  .bb-mobile a {
+    font-size: var(--text-medium);
+  }
 }
 
 /* Shared footer layout (used by all pages) */
